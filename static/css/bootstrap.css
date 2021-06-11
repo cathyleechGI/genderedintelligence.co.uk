@@ -3801,10 +3801,10 @@ font-color: white;
   line-height: 40px;
 }
 .navbar-link {
-  color: #777777;
+  color: #ffffff;
 }
 .navbar-link:hover {
-  color: #333333;
+  color: #ffffff;
 }
 .navbar .divider-vertical {
   height: 40px;
@@ -3949,9 +3949,9 @@ font-color: white;
 .navbar .nav > li > a {
   float: none;
   padding: 14px 15px 14px;
-  color: #777777;
+  color: #ffffff;
   text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0px;
 }
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 8px;
