@@ -3958,7 +3958,7 @@ font-color: white;
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: #c93cb8;
+  background-color: #ffc2f8;
   color: #000000;
   text-decoration: underline;
 }
