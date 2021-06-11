@@ -152,19 +152,20 @@ body {
   background-color: #ffffff;
 }
 a {
-  color: #ffffff;
-  background-color:#912884;
+  color: #000000;
+  background-color:#ffffff;
+    text-decoration:none
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
     font-style: normal;
 }
 a:hover {
-  color: #ffffff;
-  background-color:#a52e96;
+  color: #000000;
+  background-color:#ffffff;
   text-decoration: underline overline;
-    text-decoration-color: #add1de;
-    text-decoration-style:wavy;
+    text-decoration-color: #912884;
+    text-decoration-style:solid;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
