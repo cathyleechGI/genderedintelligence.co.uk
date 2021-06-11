@@ -2585,8 +2585,8 @@ ul.icons li .icon-large:before {
   clear: both;
   font-weight: normal;
   line-height: 12pt;
-  color: #333333;
-  white-space: nowrap;
+  color: #ffffff;
+  white-space: normal;
 }
 .dropdown-menu li > a:hover,
 .dropdown-menu li > a:focus,
