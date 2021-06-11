@@ -152,8 +152,8 @@ body {
   background-color: #ffffff;
 }
 a {
-  color: #000000;
-  background-color:#ffffff;
+  color: #ffffff;
+  background-color:#000000;
     text-decoration:none;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
@@ -161,8 +161,8 @@ a {
     font-style: normal;
 }
 a:hover {
-  color: #000000;
-  background-color:#ffffff;
+  color: #ffffff;
+  background-color:#f000000;
   text-decoration: underline overline;
     text-decoration-color: #912884;
     text-decoration-style:solid;
