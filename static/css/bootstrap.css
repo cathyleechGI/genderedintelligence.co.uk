@@ -155,8 +155,8 @@ a {
   color: #ffffff;
   background-color:#912884;
   text-decoration: none;
-    font-family: 'CooperBlkBTBlack';
-        font-src: url('/static/fonts/cooper_black.eot');
+    font-family: "CooperBlkBTBlack";
+    font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 400;
     font-style: normal;
 }
