@@ -3958,9 +3958,9 @@ font-color: white;
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: #eeeeee;
-  color: #333333;
-  text-decoration: none;
+  background-color: #ffffff;
+  color: #000000;
+  text-decoration: bold;
 }
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
