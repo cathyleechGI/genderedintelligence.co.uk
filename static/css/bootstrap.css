@@ -154,16 +154,22 @@ body {
 a {
   color: #ffffff;
   background-color:#912884;
-  text-decoration: none;
+  text-decoration: underline overline;
+    text-decoration-color: #add1de;
+    text-decoration-style:wavy;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
-    font-weight: 400;
+    font-weight: 100;
     font-style: normal;
 }
 a:hover {
   color: #ffffff;
-  background-color:#912884;
-  text-decoration: none;
+  background-color:#a52e96;
+  text-decoration-line:underline;
+    font-family: "CooperBlkBTBlack";
+    font-src: url("/static/fonts/cooper_black.eot");
+    font-weight: 100;
+    font-style: normal;
 }
 .img-rounded {
   -webkit-border-radius: 6px;
