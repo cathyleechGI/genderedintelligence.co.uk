@@ -1668,22 +1668,22 @@ table [class*=span],
 }
 .table .span4 {
   float: none;
-  width: 284px;
+  width: 25%;
   margin-left: 0;
 }
 .table .span5 {
   float: none;
-  width: 364px;
+  width: 25%;
   margin-left: 0;
 }
 .table .span6 {
   float: none;
-  width: 444px;
+  width: 25%;
   margin-left: 0;
 }
 .table .span7 {
   float: none;
-  width: 524px;
+  width: 25%;
   margin-left: 0;
 }
 .table .span8 {
