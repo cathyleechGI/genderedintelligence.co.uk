@@ -3424,7 +3424,7 @@ input[type="submit"].btn.btn-mini {
 }
 .nav > li > a:hover {
   text-decoration: underline;
-  background-color: #eeeeee;
+  background-color: #ffffff;
 text-color: white;
 font-color: white;
 }
@@ -3519,7 +3519,7 @@ font-color: white;
   border-radius: 4px 4px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #dddddd;
+  border-color: #ffffff;
 }
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
