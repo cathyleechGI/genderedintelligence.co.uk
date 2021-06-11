@@ -146,7 +146,7 @@ textarea {
 body {
   margin: 0;
   font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12pt;
+  font-size: 10pt;
   line-height: 12pt;
   color: #333333;
   background-color: #ffffff;
@@ -154,9 +154,6 @@ body {
 a {
   color: #ffffff;
   background-color:#912884;
-  text-decoration: underline overline;
-    text-decoration-color: #add1de;
-    text-decoration-style:wavy;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
@@ -165,7 +162,9 @@ a {
 a:hover {
   color: #ffffff;
   background-color:#a52e96;
-  text-decoration-line:underline;
+  text-decoration: underline overline;
+    text-decoration-color: #add1de;
+    text-decoration-style:wavy;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
