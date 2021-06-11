@@ -3960,7 +3960,7 @@ font-color: white;
 .navbar .nav > li > a:hover {
   background-color: #ffc2f8;
   color: #000000;
-  text-decoration: underline;
+  text-decoration: none;
 }
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
