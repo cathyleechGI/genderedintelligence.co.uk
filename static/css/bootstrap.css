@@ -157,8 +157,6 @@ a {
   text-decoration: none;
     font-family: 'CooperBlkBTBlack';
         font-src: url('/static/fonts/cooper_black.eot');
-    font-src: url('/static/fonts/cooper_black.eot?#iefix') font-format('embedded-opentype'), font-url('/static/fonts/cooper_black.woff') font-format('woff'), font-url('/static/fonts/cooper_black.ttf') font-format('truetype'),
-        url('/static/fonts/cooper_black.svg#CooperBlkBTBlack') format('svg');
     font-weight: 400;
     font-style: normal;
 }
