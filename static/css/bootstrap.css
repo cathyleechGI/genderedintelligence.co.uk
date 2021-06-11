@@ -2588,6 +2588,9 @@ ul.icons li .icon-large:before {
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-top: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
 }
 .dropdown-menu a {
   display: block;
@@ -2595,7 +2598,7 @@ ul.icons li .icon-large:before {
   clear: both;
   font-weight: normal;
   line-height: 12pt;
-  color: #ffffff;
+  color: #000000;
   white-space: normal;
 }
 .dropdown-menu li > a:hover,
