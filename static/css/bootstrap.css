@@ -3803,7 +3803,7 @@ font-color: #000000;
   font-size: 20px;
   font-weight: 200;
   color: #777777;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0px;
 }
 .navbar .brand:hover {
   text-decoration: none;
@@ -3813,10 +3813,10 @@ font-color: #000000;
   line-height: 40px;
 }
 .navbar-link {
-  color: #ffffff;
+  color: #000000;
 }
 .navbar-link:hover {
-  color: #ffffff;
+  color: #000000;
 }
 .navbar .divider-vertical {
   height: 40px;
@@ -3961,7 +3961,7 @@ font-color: #000000;
 .navbar .nav > li > a {
   float: none;
   padding: 14px 15px 14px;
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
   text-shadow: 0px;
 }
@@ -3990,7 +3990,7 @@ font-color: #000000;
   padding: 7px 10px;
   margin-left: 5px;
   margin-right: 5px;
-  color: #ffffff;
+  color: #000000;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #ededed;
   background-image: -moz-linear-gradient(top, #f2f2f2, #e5e5e5);
@@ -4015,7 +4015,7 @@ font-color: #000000;
 .navbar .btn-navbar.active,
 .navbar .btn-navbar.disabled,
 .navbar .btn-navbar[disabled] {
-  color: #ffffff;
+  color: #000000;
   background-color: #e5e5e5;
   *background-color: #d9d9d9;
 }
@@ -4052,9 +4052,9 @@ font-color: #000000;
 .navbar .nav > li > .dropdown-menu:after {
   content: '';
   display: inline-block;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 6px solid #ffffff;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
   position: absolute;
   top: -6px;
   left: 10px;
@@ -4134,24 +4134,24 @@ font-color: #000000;
 }
 .navbar-inverse .brand:hover,
 .navbar-inverse .nav > li > a:hover {
-  color: #ffffff;
+  color: #000000;
 }
 .navbar-inverse .nav > li > a:focus,
 .navbar-inverse .nav > li > a:hover {
   background-color: transparent;
-  color: #ffffff;
+  color: #000000;
 }
 .navbar-inverse .nav .active > a,
 .navbar-inverse .nav .active > a:hover,
 .navbar-inverse .nav .active > a:focus {
-  color: #ffffff;
+  color: #000000;
   background-color: #111111;
 }
 .navbar-inverse .navbar-link {
   color: #999999;
 }
 .navbar-inverse .navbar-link:hover {
-  color: #ffffff;
+  color: #000000;
 }
 .navbar-inverse .divider-vertical {
   border-left-color: #111111;
@@ -4161,7 +4161,7 @@ font-color: #000000;
 .navbar-inverse .nav li.dropdown.active > .dropdown-toggle,
 .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
   background-color: #111111;
-  color: #ffffff;
+  color: #000000;
 }
 .navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
   border-top-color: #999999;
