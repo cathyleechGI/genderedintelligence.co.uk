@@ -2617,7 +2617,7 @@ ul.icons li .icon-large:before {
 }
 .dropdown-menu .active > a,
 .dropdown-menu .active > a:hover {
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
   outline: 0;
   background-color: #add1de;
