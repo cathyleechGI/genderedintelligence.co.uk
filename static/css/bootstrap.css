@@ -165,7 +165,7 @@ a:hover {
   background-color:#000000;
   text-decoration: underline overline;
     text-decoration-color: #912884;
-    text-decoration-style:solid;
+    text-decoration-style: 2px solid;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
