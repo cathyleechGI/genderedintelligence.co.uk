@@ -3437,8 +3437,8 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover {
   text-decoration: underline;
   background-color: #ffffff;
-text-color: white;
-font-color: white;
+text-color: #000000;
+font-color: #000000;
 }
 .nav > .pull-right {
   float: right;
