@@ -3423,8 +3423,10 @@ input[type="submit"].btn.btn-mini {
   display: block;
 }
 .nav > li > a:hover {
-  text-decoration: none;
-  background-color: #eeeeee;
+  text-decoration: underline;
+  background-color: #912884;
+text-color: white;
+font-color: white;
 }
 .nav > .pull-right {
   float: right;
