@@ -154,7 +154,7 @@ body {
 a {
   color: #000000;
   background-color:#ffffff;
-    text-decoration:none
+    text-decoration:none;
     font-family: "CooperBlkBTBlack";
     font-src: url("/static/fonts/cooper_black.eot");
     font-weight: 100;
