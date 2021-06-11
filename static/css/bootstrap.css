@@ -2592,14 +2592,14 @@ ul.icons li .icon-large:before {
 .dropdown-menu li > a:focus,
 .dropdown-submenu:hover > a {
   text-decoration: none;
-  color: #ffffff;
-  background-color: #912884;
-  background-color: #89267d;
-  background-image: -moz-linear-gradient(top, #912884, #7d2272);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#912884), to(#7d2272));
-  background-image: -webkit-linear-gradient(top, #912884, #7d2272);
-  background-image: -o-linear-gradient(top, #912884, #7d2272);
-  background-image: linear-gradient(to bottom, #912884, #7d2272);
+  color: #000000;
+  background-color: #add1de;
+  background-color: #add1de;
+  background-image: -moz-linear-gradient(top, #add1de, #c5e4f0);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#add1de), to(#c5e4f0));
+  background-image: -webkit-linear-gradient(top, #add1de, #c5e4f0);
+  background-image: -o-linear-gradient(top, #add1de, #c5e4f0);
+  background-image: linear-gradient(to bottom, #add1de, #c5e4f0);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff912884', endColorstr='#ff7d2272', GradientType=0);
 }
