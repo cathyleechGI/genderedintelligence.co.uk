@@ -3706,7 +3706,7 @@ font-color: white;
   border-radius: 4px 0 0 4px;
 }
 .tabs-left > .nav-tabs > li > a:hover {
-  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+  border-color: #000000;
 }
 .tabs-left > .nav-tabs .active > a,
 .tabs-left > .nav-tabs .active > a:hover {
@@ -3725,7 +3725,7 @@ font-color: white;
   border-radius: 0 4px 4px 0;
 }
 .tabs-right > .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #eeeeee #dddddd;
+  border-color: #ffffff;
 }
 .tabs-right > .nav-tabs .active > a,
 .tabs-right > .nav-tabs .active > a:hover {
@@ -3958,9 +3958,9 @@ font-color: white;
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: #ffffff;
+  background-color: #c93cb8;
   color: #000000;
-  text-decoration: bold;
+  text-decoration: underline;
 }
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
