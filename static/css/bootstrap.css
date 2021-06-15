@@ -20,6 +20,16 @@ nav,
 section {
   display: block;
 }
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width:auto;
+  max-width: 500px;
+    max-height:300px;
+    overflow-y: scroll !important;
+  margin: 20px auto;
+}
 aside {
     width: 30%;
     padding-left: .5rem;
