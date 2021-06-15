@@ -1,19 +1,74 @@
 ---
 title: Public Engagement
 ---
-<script>
-    $('.open-popup-link').magnificPopup({
-  type:'inline',
-  midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
-});</script>
-<a href="#pbs" data-mfp-src="#test-popup" class="open-popup-link">Show ****</a>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+  overflow-y: scroll !important;
+  max-height: 100px;
+}
 
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
 
-<div id="pbs" class="white-popup mfp-hide">
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
 
-    
-    ‘Puberty blockers’ is the well-known term for GnRHa, which is a medication that delays puberty – the development of secondary sex characteristics. GnRA is administered to a small minority of young people who are experiencing significant distress due to ‘Gender Dypshoria’. The treatment for this group of individuals has been adopted since the mid-1990s and has also been used to treat young people with diagnosed precocious puberty since the 1970s. 
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
+</head>
+<body style="text-align:center">
+
+<h2>Popup</h2>
+
+<div class="popup" onclick="myFunction()">Click me to toggle the popup!
+  <span class="popuptext" id="myPopup">‘Puberty blockers’ is the well-known term for GnRHa, which is a medication that delays puberty – the development of secondary sex characteristics. GnRA is administered to a small minority of young people who are experiencing significant distress due to ‘Gender Dypshoria’. The treatment for this group of individuals has been adopted since the mid-1990s and has also been used to treat young people with diagnosed precocious puberty since the 1970s. 
 The effects of the treatment are reversible and are only prescribed to young people who have reached at least Tanner Stage two – i.e. puberty has started usually around the age of 11-13.
 Current estimates are that 400 young people in England and Wales are receiving puberty delaying treatment.
 Any young person receiving puberty delaying treatment will attend the Gender Identity Development Service (GIDS), which is a national psychological service for young people who experience ‘gender dysphoria’ or are questioning their gender identity throughout England and Wales. It is part of the Tavistock Trust and the service is commissioned by NHS England Specialised Services. Clinicians at GIDS are responsible for assessing young people and referring them to an endocrine team. 
@@ -28,5 +83,13 @@ In the article, “Is puberty delaying treatment ‘experimental treatment’?�
 Not all children who have non-congruent gender expression also suffer dysphoria and there is significant variability in gender expression, both in cisgender children and transgender children (Gülgöz et al., 2019). Many cisgender children express behaviors that are perceived as gender non-congruent in the culture of belonging. These are not the children who would typically be treated medically.
 …
 Since the mid 1990s, puberty delaying medications have been prescribed to some adolescents (not prepubertal children) with severe and persistent gender dysphoria, in cases in which such distress was aggravated by pubertal development 
+</span>
+</div>
 
-</div></body>
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
