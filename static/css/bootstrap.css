@@ -28,6 +28,8 @@ aside {
     box-shadow: inset 5px 0 5px -5px #29627e;
     font-style: italic;
     color: #29627e;
+    text-size:8pt;
+    font-family:Verdana;
 }
 
 aside > p {
