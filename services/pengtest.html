@@ -71,7 +71,7 @@ border-top:none;  border-spacing:0px; border-collapse: collapse; padding:12px" v
 <div>
     <ul class="collapsible" data-collapsible="accordion">
         <li>
-            <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>First</div>
+            <div class="collapsible-header" id="openfirst"><i class="mdi-navigation-chevron-right"></i>First</div>
             <div class="collapsible-body">
                 <p>Hello StackOverflow! SO's da' bomb diggidy!</p>
             </div>
@@ -85,7 +85,7 @@ border-top:none;  border-spacing:0px; border-collapse: collapse; padding:12px" v
         <li>
             <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>Third</div>
             <div class="collapsible-body">
-                <p>I'd like to <a href="#" data-click=".collapsible .collapsible-header:first">open the First collapsible element</a> in this list.</p>
+                <p>I'd like to <a href="#openfirst" data-click="true">open the First collapsible element</a> in this list.</p>
             </div>
         </li>
     </ul>
