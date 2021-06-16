@@ -67,11 +67,10 @@ border-top:none;  border-spacing:0px; border-collapse: collapse; padding:12px" v
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css" rel="stylesheet"/>
-
 <div>
     <ul class="collapsible" data-collapsible="accordion">
         <li>
-            <div class="collapsible-header" id="openfirst"><i class="mdi-navigation-chevron-right"></i>First</div>
+            <div id="openfirst" class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>First</div>
             <div class="collapsible-body">
                 <p>Hello StackOverflow! SO's da' bomb diggidy!</p>
             </div>
@@ -85,7 +84,7 @@ border-top:none;  border-spacing:0px; border-collapse: collapse; padding:12px" v
         <li>
             <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>Third</div>
             <div class="collapsible-body">
-                <p>I'd like to <a href="#openfirst" data-click="true">open the First collapsible element</a> in this list.</p>
+                <p>I'd like to <a href="#openfirst" title="Click to open first item" data-click="true">open the First collapsible element</a> in this list.</p>
             </div>
         </li>
     </ul>
