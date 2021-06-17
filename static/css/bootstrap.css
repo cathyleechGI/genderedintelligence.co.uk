@@ -179,8 +179,8 @@ a {
   color: #000000;
   background-color:#fce8fa;
     text-decoration:none;
-    font-family: "CooperBlkBTBlack";
-    font-src: url("/static/fonts/cooper_black.eot");
+    font-family: "Cooper Md BT";
+    font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
     font-weight: 100;
     font-style: normal;
 }
@@ -190,8 +190,8 @@ a:hover {
   text-decoration: underline overline;
     text-decoration-color: #912884;
     text-decoration-style: 2px solid;
-    font-family: "CooperBlkBTBlack";
-    font-src: url("/static/fonts/cooper_black.eot");
+    font-family: "Cooper Md BT";
+    font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
     font-weight: 100;
     font-style: normal;
 }
