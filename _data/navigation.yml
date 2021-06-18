@@ -141,7 +141,7 @@
      - page: Join the team
        url: about/join-the-team.html
      - page: Funding
-       url: support-us/funding.html
+       url: about-us/funding.html
      - page: Reports & Resources
        url: about-us/reports-and-resources.html
        icon: icon-book
