@@ -19,8 +19,6 @@
        icon: icon-heart
      - page: Youth Group Volunteer
        url: support-us/youthgroupvolunteer.html
-     - page: Funding
-       url: support-us/funding.html
 - page: COVID-19
   subnav:
      - page: Resources Hub
@@ -142,6 +140,8 @@
        url: "https://genderedintelligence.wordpress.com/"
      - page: Join the team
        url: about/join-the-team.html
+     - page: Funding
+       url: support-us/funding.html
      - page: Reports & Resources
        url: about-us/reports-and-resources.html
        icon: icon-book
