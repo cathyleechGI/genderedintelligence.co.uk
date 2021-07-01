@@ -1,0 +1,367 @@
+#!/usr/bin/perl -w -I../commonlib/perllib -I../perllib
+#
+# fyrqd:
+# FYR queue daemon.
+#
+# Copyright (c) 2004 UK Citizens Online Democracy. All rights reserved.
+# Email: chris@mysociety.org; WWW: http://www.mysociety.org/
+#
+
+my $rcsid = ''; $rcsid .= '$Id: fyrqd,v 1.28 2007-08-02 11:45:00 matthew Exp $';
+
+use strict;
+require 5.8.0;
+
+# Horrible boilerplate to set up appropriate library paths.
+use FindBin;
+use lib "$FindBin::Bin/../perllib";
+use lib "$FindBin::Bin/../commonlib/perllib";
+
+use Error qw(:try);
+use Fcntl;
+use Getopt::Long;
+use IO::Select;
+use IO::Socket;
+use Pod::Usage;
+use POSIX;
+use Sys::Syslog;
+
+use mySociety::Config;
+BEGIN {
+    mySociety::Config::set_file("$FindBin::Bin/../conf/general");
+}
+use mySociety::PIDFile;
+use mySociety::SystemMisc qw(print_log);
+
+use FYR::Queue;
+
+# Variable set in signal handler to indicate termination.
+my $foad = 0;
+
+# logmsg_handler ID TIME STATE MESSAGE IMPORTANT
+# Callback for logmsg, so that we can log fyrqd messages to the system log or
+# standard error for easier debugging.
+sub logmsg_handler ($$$$$) {
+    my ($id, $time, $state, $msg, $important) = @_;
+    print_log($important ? 'info' : 'notice',
+            "message $id($state): $msg");
+    print_log($important ? 'info' : 'notice',
+            "last message delayed by " . (time() - $time) . " seconds")
+                if ($time > time() + 5);
+}
+
+# run_daemon EMAIL FAX SEQUENCE SOCKET [MSGID]
+# Actual guts of the thing. SEQUENCE is the total number of daemon processes
+# which have been started before this one. FAX and EMAIL indicate whether this
+# process should try to send emails and/or faxes, respectively. MSGID
+# is optional, and restricts the daemon to only working on the given message.
+sub run_daemon ($$$$;$) {
+    my ($email, $fax, $seq, $notifysock, $msgid) = @_;
+    $email ||= 0;
+    $fax ||= 0;
+
+    # If the whole daemon is just starting up, then force an immediate queue
+    # run.
+    my $nactions = 0;
+    if ($seq == 0) {
+        my $t = time();
+        print_log('info', "first process running queue");
+        $0 = "fyrqd (running queue - startup)";
+        $nactions = FYR::Queue::process_queue($email, $fax, \$foad, $msgid);
+        $0 = "fyrqd";
+        $t = time() - $t;
+        print_log('info', "queue run completed; actions: $nactions, time: ${t}s");
+    }
+
+    # Now run the queue every few minutes, or when notified.
+    my $sel;
+    $sel = new IO::Select($notifysock) if (defined($notifysock));
+    my $iter = 0;
+    while (!$foad and $iter < 1000) {
+        my $doit = "continuation";
+        # Continue immediately if we've been notified of a new message, or if
+        # the last queue run took any actions.
+        if ($nactions == 0) {
+            if (defined($sel)) {
+                if ($sel->can_read(480 + rand(240))) {
+                    my $buf = '';
+                    my $n = $notifysock->sysread($buf, 1, 0);
+                    if (!defined($n)) {
+                        $doit = 0;
+                    } else {
+                        print_log('info', "woken up by external notification");
+                        $doit = "notified";
+                    }
+                } else {
+                    $doit = "periodic";
+                }
+            } else {
+                sleep(60 + rand(60));
+                $doit = "periodic";
+            }
+        }
+        # we might have received a signal during select.
+        last if ($foad);
+        if ($doit) {
+            my $t = time();
+            print_log('info', "running queue");
+            $0 = "fyrqd (running queue - $doit)";
+            $nactions = FYR::Queue::process_queue($email, $fax, \$foad, $msgid);
+            $0 = "fyrqd";
+            $t = time() - $t;
+            print_log('info', "queue run completed; actions: $nactions, time: ${t}s");
+        }
+    }
+
+    print_log('notice', "shutting down after $iter iterations");
+}
+
+# Entry point.
+$0 = "fyrqd";
+my $numprocesses = mySociety::Config::get('QUEUE_DAEMON_PROCESSES', 5);
+my $socketpath = mySociety::Config::get('QUEUE_DAEMON_SOCKET', '/tmp/fyrqd.sock');
+my $pidfilepath = mySociety::Config::get('QUEUE_DAEMON_PIDFILE', '/var/run/fyrqd.pid');
+my $email = mySociety::Config::get('QUEUE_DAEMON_SEND_EMAIL', 0);
+my $fax = mySociety::Config::get('QUEUE_DAEMON_SEND_FAX', 0);
+my $once = 0;
+my $msgid = 0;
+my $nodetach = 0;
+my $help = 0;
+my $multiple = 0;
+if (!GetOptions(
+        'processes=i' =>    \$numprocesses,
+        'socket=s' =>       \$socketpath,
+        'pidfile=s' =>      \$pidfilepath,
+        'email' =>          \$email,
+        'fax' =>            \$fax,
+        'once' =>           \$once,
+        'msgid=s' =>        \$msgid,
+        'multiple=i' =>     \$multiple,
+        'debug' =>          \$nodetach,
+        'help' =>           \$help
+    )) {
+    print_log('err', "bad options; try --help for help");
+    exit(1);
+}
+
+
+if ($help) {
+    pod2usage(-exitval => 0, -verbose => 1);
+    exit(0);
+}
+
+FYR::Queue::logmsg_set_handler(\&logmsg_handler);
+
+if ($fax && FYR::Queue::outside_fax_hours()) {
+    print_log('warning', "nighttime, not sending faxes");
+}
+
+if ($once) {
+    FYR::Queue::process_queue($email, $fax, \$foad, $msgid);
+    exit(0);
+}
+
+if ($multiple) {
+    for (my $i=0; $i < $multiple; ++$i) {
+        FYR::Queue::process_queue($email, $fax, \$foad, $msgid);
+    }
+    exit(0);
+}
+
+$numprocesses = 5 if ($numprocesses < 1 or $numprocesses > 100);
+
+mySociety::SystemMisc::daemon() unless ($nodetach);
+
+my $pidfile;
+try {
+    $pidfile = new mySociety::PIDFile($pidfilepath);
+} catch mySociety::PIDFile::Error with {
+    my $E = shift;
+    print_log('err', $E->text());
+    exit(1);
+};
+
+print_log('info', "starting up; this instance " . ($email ? 'will' : 'will not') . " send emails; " . ($fax ? 'will' : 'will not') . " send faxes");
+
+unlink($socketpath);
+my $notifysock;
+if (!($notifysock = new IO::Socket::UNIX(Type => SOCK_DGRAM, Local => $socketpath))) {
+    print_log('warning', "$socketpath: $!; proceeding without notification socket");
+} else {
+    my $flag = fcntl($notifysock, F_GETFL, 0);
+    fcntl($notifysock, F_SETFL, O_NONBLOCK | $flag);
+}
+
+my $schld = new POSIX::SigSet(POSIX::SIGCHLD) or die "sigset: $!";
+sub block_sigchld ($) {
+    if ($_[0]) {
+        sigprocmask(POSIX::SIG_BLOCK, $schld);
+    } else {
+        sigprocmask(POSIX::SIG_UNBLOCK, $schld);
+    }
+}
+
+# Hash of child PID -> start time.
+my %children;
+
+# Simple signal handler to set a flag when we should quit/restart.
+$SIG{TERM} = $SIG{INT} = $SIG{HUP} = sub {
+        $foad = eval "POSIX::SIG$_[0]"; # sooooo ugly.
+    };
+
+# Make sure we can wait for expired child processes.
+$SIG{CHLD} = sub { };
+
+my $num = 0;
+while ($foad == 0) {
+    block_sigchld(1);
+    while (scalar(keys(%children)) < $numprocesses) {
+        my $pid = fork();
+        if (!defined($pid)) {
+            print_log('err', "fork: $!");
+        } elsif ($pid == 0) {
+            try {
+                run_daemon($email, $fax, $num, $notifysock, $msgid);
+            } catch Error with {
+                my $E = shift;
+                print_log('err', "process failed with error $E");
+                exit(1);
+            };
+            exit(0);
+        } else {
+            print_log('info', "started new child process, PID $pid");
+            $children{$pid} = time();
+            ++$num;
+        }
+    }
+
+    if (keys(%children) == 0) {
+        # This should only occur under very high load. So wait for a bit and
+        # then try again.
+        print_log('warning', "no running children, and unable to start any; waiting...");
+        sleep(10);
+        next;
+    }
+    
+    # Previously perl had the usual behaviour over signals: arrival of a signal
+    # would cause system calls to return with EINTR. However, since perl 5.7.3,
+    # it supports "deferred signals", which are intended to make perl signal
+    # handling safe (presumably, by running signal handlers synchronously). As
+    # part of this change the maintainers decided that some system calls would
+    # be interruptible, and some would not (see perlipc(3)). One of the calls
+    # which is no longer restartable is wait(2). So we can't just call wait
+    # here, since then the loop would hang for ever. Instead, call waitpid in
+    # a loop to collect expired children, and then sleep. Hopefully, signals
+    # will interrupt sleep, but just in case, don't sleep for too long....
+    block_sigchld(0);
+    while ((my $terminated = waitpid(-1, WNOHANG)) > 0) {
+        block_sigchld(1);
+
+        if (exists($children{$terminated})) {
+            if ($? & 127) {
+                print_log('err', "child process, PID $terminated, killed by signal " . ($? & 127));
+            } elsif ($? >> 8) {
+                print_log('err', "child process, PID $terminated, exited with error status " . ($? >> 8));
+            } else {
+                print_log('info', "child process, PID $terminated, exited normally");
+            }
+            
+            if ($children{$terminated} > time() - 10) {
+                print_log('err', "child process, PID $terminated, lived for only " . (time() - $children{$terminated}) . " seconds; holding off before restarting it");
+                sleep(5); # XXX we won't reap other children during this time, obviously
+            }
+            
+            delete($children{$terminated});
+        }
+        block_sigchld(0);
+    }
+
+    sleep(5);
+}
+
+kill(SIGTERM, keys %children);
+
+undef($pidfile);
+unlink($socketpath);
+
+if ($foad == SIGHUP) {
+    print_log('notice', "restarting on signal $foad");
+    { exec($FindBin::Script, @ARGV); }  # suppress "not likely to be reached" warning
+    print_log('err', "exec: $!");
+    exit(1);
+} else {
+    print_log('notice', "shutting down on signal $foad");
+}
+
+exit(0);
+
+__END__
+
+=head1 NAME
+
+fyrqd
+
+=head1 SYNOPSIS
+
+fyrqd --help | [OPTIONS]
+
+=head1 DESCRIPTION
+
+Queue management daemon for FaxYourRepresentative.
+
+=head1 OPTIONS
+
+=over 4
+
+=item --help
+
+Display information about using the program.
+
+=item --debug
+
+Don't detach from controlling terminal; log diagnostics to standard error as
+well as the system log.
+
+=item --socket PATH
+
+Use PATH as the location of the notification socket. By default, uses the value
+defined in the config file, or "/tmp/fyrqd.sock".
+
+=item --pidfile PATH
+
+Use PATH as the location of the PID file. By default, uses the value defined in
+the config file, or "/var/run/fyrqd.pid".
+
+=item --processes NUM
+
+Run NUM queue-running child processes. By default, uses the value defined in
+the config file, or 5.
+
+=item --email
+
+=item --fax
+
+Send faxes or emails respectively. Default is neither.
+
+=item --once
+
+Run the queue once, then exit.
+
+=item --msgid MSGID
+
+Run for just the specified message.
+
+=item --multiple NUM
+
+Run the queue NUM times, then exit.
+
+=back
+
+=head1 COPYRIGHT 
+
+Copyright (c) 2004 UK Citizens Online Democracy
+
+=head1 VERSION
+
+$Id: fyrqd,v 1.28 2007-08-02 11:45:00 matthew Exp $
+

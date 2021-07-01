@@ -1,0 +1,919 @@
+#!/usr/bin/perl -w -I../commonlib/perllib
+#
+# test-run:
+# Test harness for WriteToThem.  Makes sure we haven't broken the code.
+# 
+# Requires:
+# * ../general/conf file set up for WriteToThem, and matching the below requirements
+# * apache configured to serve ../web on OPTION_BASE_URL
+# * an FYR database with name ending "_testharness"; this script will drop and remake 
+#   the database, so make sure it is never used for anything important
+# * email addresses (email_n in FYR::TestHarness) configured to pipe to ./test-mailin with fast
+#   local delivery, and
+# * similar address with "team" instead of "n" configured in OPTION_CONTACT_EMAIL
+# * email address set in OPTION_EMAIL_PREFIX configured to pipe to ./handlemail
+# * a Ratty database with name ending "_testharness", configured in the ratty service
+#   that OPTION_RATTY_URL talks to. This will not be dropped and remade, but rules in 
+#   the scope fyr-abuse will be dropped and recreated. 
+# * likewise, an "_testharness" survey database whose entries will be deleted.
+#
+# Copyright (c) 2005 UK Citizens Online Democracy. All rights reserved.
+# Email: francis@mysociety.org; WWW: http://www.mysociety.org/
+#
+
+# TODO:
+# Bounce messages to rep
+# Admin pages
+# Via democratic services
+# User correction
+
+my $rcsid = ''; $rcsid .= '$Id: test-run,v 1.97 2009-11-19 12:36:03 matthew Exp $';
+
+use strict;
+require 5.8.0;
+
+use Data::Dumper;
+use Carp qw(verbose);
+use Storable;
+use FindBin;
+use Getopt::Long;
+use IO::Handle;
+use Test::Harness;
+
+use mySociety::EmailUtil;
+use mySociety::TempFiles;
+use mySociety::Config;  
+mySociety::Config::set_file('../conf/general');
+use mySociety::DBHandle qw(dbh);
+use mySociety::WebTestHarness;
+use mySociety::Ratty;
+use FindBin;
+use lib "$FindBin::Bin/../perllib";
+use FYR::TestHarness qw(email_n name_n call_fyrqd set_fyr_date spin_queue send_message_to_rep check_delivered_to_rep call_handlemail confirm_message);
+use FYR::Cobrand;
+
+my @actions = ('fax', 'example', 'mistype', 'bounce', 'lords', 'group', 'unit');
+my %actions_desc = (
+    'example' => 'send example message successfully, and some example messages blocked by ratty',
+    'mistype' => 'check mistyped postcodes work',
+    'bounce' => 'test autoresponder (TODO: doesn\'t test rep email failure bounces)',
+    'lords' => 'send example message to a Lord',
+    'fax' => 'send example fax message successfully (no faxes sent 8pm-8am - tests will fail)',
+    'group' => 'send example message to a group of reps',
+    'unit' => 'run the unit tests',
+);
+
+my ($wth, $action, $verbose, $pause, $multispawn) = mySociety::WebTestHarness::setup({
+    actions => \@actions,
+    actions_desc => \%actions_desc,
+    dbname => 'FYR_QUEUE',
+    no_validate_html => 1,
+});
+$multispawn = 2;
+
+# Configure test harness class
+print "Set up web test harness...\n" if $verbose > 0;
+
+# Set up options
+our $base_url;
+sub set_base_url($) {
+    my $cobrand = shift;
+    if (mySociety::Config::get('HTTPS_ONLY')) {
+        $base_url = "https://" . $cobrand . mySociety::Config::get('WEB_DOMAIN');
+    } else {
+        $base_url = "http://" . $cobrand . mySociety::Config::get('WEB_DOMAIN');
+    }
+}
+set_base_url('');
+die "domain conf not consistent. Expected " . $base_url . ', got ' . mySociety::Config::get('BASE_URL') if (mySociety::Config::get('BASE_URL') ne $base_url);
+
+our $admin_url = mySociety::Config::get('ADMIN_URL');
+our $contact_email = mySociety::Config::get('CONTACT_EMAIL');
+our $admin_auth_user = mySociety::Config::get('ADMIN_AUTH_USER');
+our $admin_auth_password = mySociety::Config::get('ADMIN_AUTH_PASSWORD');
+
+my $CAMBRIDGE_MP = 'Daniel Zeichner';
+
+our @rep_names = ('Barbara Gibson', 'Catherine Rowett', 'June Mummery', 'Lucy Nethsingha', 'Richard Tice', 'Geoffrey Van Orden', 'Michael Heaver');
+my $mep_rep_name = 'Catherine Rowett';
+
+#############################################################################
+# Main code
+
+$wth->log_watcher_self_test($base_url . "/test.php?error=1", "deliberate_error_to_test_error_handling");
+
+if (mySociety::Config::get('HTTPS_ONLY')) {
+    $base_url =~ m#^https://(.+)/?$#;
+    $wth->browser_credentials("$1:443", "$1 admin pages", $admin_auth_user, $admin_auth_password);
+} else {
+    $base_url =~ m#^http://(.+)/?$#;
+$wth->browser_credentials("$1:80", "$1 admin pages", $admin_auth_user, $admin_auth_password);
+}
+mySociety::Ratty::admin_delete_rules('fyr-abuse');
+
+$wth->fax_setup();
+# Syntax check all .php files
+print "Syntax check all PHP files...\n" if $verbose > 0;
+$wth->php_check_syntax("../../writetothem/");
+$wth->php_check_syntax("../../writetothem/templates/emails/", qr//);
+my $expected_messages = { enter_postcode => 'First, enter your UK postcode',
+                          select_rep     => "Choose your representative",
+                          select_lord    => 'Which Lord would you like to write to?',
+                          write_message  => 'Write your message',
+                          preview        => 'Preview your message',
+                          check_email    => 'Now check your email!'};
+our $options = { wth               => $wth,
+                 verbose           => $verbose,
+                 multispawn        => $multispawn, 
+                 expected_messages => $expected_messages };
+
+foreach (@actions) {
+    next unless $action->{$_};
+    print "\u$actions_desc{$_}\n" if $verbose > 0 && $actions_desc{$_};
+    if ($_ eq 'example') {
+        do_send_example_message();
+        print "Testing ratty blocking message...\n" if $verbose > 0;
+        # do_send_blocked_message depends on do_send_example_message having
+        # been already called, to populate the Ratty example fields table
+        do_send_blocked_message(); 
+        # do_send_group_abuse is also dependent on do_send_example_message
+        do_send_group_abuse();
+    }
+    do_test_mistyped_postcode() if $_ eq 'mistype';
+    do_test_bounce_stuff() if $_ eq 'bounce';
+    do_send_fax_message() if $_ eq 'fax';
+    do_send_lords_message() if $_ eq 'lords';
+    if ($_ eq 'group') {
+        do_send_group_message();
+        do_admin_confirm_group_message();
+    }
+    do_run_unit_tests() if $_ eq 'unit';
+}
+
+#print "Sending bouncing message...\n" if $verbose > 0;
+#do_send_bouncing_message();
+
+# Check for any unhandled mails, faxes or errors
+call_fyrqd($wth, $verbose, $multispawn);
+call_fyrqd($wth, $verbose, $multispawn, '--fax');
+
+print "Checking no emails left at end...\n" if $verbose > 1;
+$wth->email_check_none_left();
+print "Checking no faxes left at end...\n" if $verbose > 1;
+$wth->fax_check_none_left();
+print "Checking no log file errors at end...\n" if $verbose > 1;
+$wth->log_watcher_check();
+print "Everything completed successfully\n";
+
+#############################################################################
+
+sub do_send_example_message {
+    set_base_url("");
+    set_fyr_date('1990-01-01', undef, $verbose);
+
+    $options->{base_url} = $base_url;
+    my $repinfo = {repname => $CAMBRIDGE_MP};
+
+    send_message_to_rep(0, 
+        'CB23QJ', # The Guildhall, Cambridge 
+        { 
+            writer_address1 => '23 Something Street',
+            writer_town => 'Someplace',
+            state => 'Someshire',
+            writer_phone => undef,
+            body => "Dear Tester,This is a test message which shouldn't ever get to a real representative. It means the test harness is working. It's quite long because real messages are quite long. People ask lots of questions which when they are answered will solve all their problems. Sometimes this works, sometimes it doesn't."
+        }, 
+	$repinfo,         
+        $options
+    );
+    confirm_message(0, $repinfo, $options);
+
+    check_delivered_to_rep(0, "$CAMBRIDGE_MP MP", '23 Something Street', $options);
+
+    # 2 days to get over bounce_wait
+    spin_queue('1990-01-%02d', 2, 4, $wth, $verbose, $multispawn);
+    # 13th day after sending, no questionnaire
+    spin_queue('1990-01-%02d', 4, 15, $wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+    # 14th day after sending provokes sending of questionnaire
+    set_fyr_date('1990-01-15', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    my $questionnaire_email = $wth->email_get_containing(
+        [ -and =>
+            '%To: "'.name_n(0).'" <'.email_n(0).'>%',
+            '%Subject: Did your MP reply to your letter?%',
+            "%Two weeks ago we sent your letter to $CAMBRIDGE_MP MP%"
+        ]);
+    # 6 days more, no reminder
+    spin_queue('1990-01-%02d', 16, 22, $wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+    # 7th day, provokes sending of questionnaire reminder
+    set_fyr_date('1990-01-22', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    $questionnaire_email = $wth->email_get_containing(
+        [ -and =>
+            '%To: "'.name_n(0).'" <'.email_n(0).'>%',
+            '%Subject: Did your MP reply to your letter?%',
+            "%Three weeks ago we sent your letter to $CAMBRIDGE_MP MP%"
+        ]);
+
+    # Get links from questionnaire email
+    die "Questionnaire yes link not found" if ($questionnaire_email !~ m#^\s*($base_url/Y/.*$)#m);
+    my $yes_link = $1;
+    $wth->email_check_url($yes_link);
+    print "Questionnaire 'yes' URL is $yes_link\n" if $verbose > 1;
+    die "Questionnaire no link not found" if ($questionnaire_email !~ m#^\s*($base_url/N/.*$)#m);
+    my $no_link = $1;
+    $wth->email_check_url($no_link);
+    print "Questionnaire 'no' URL is $no_link\n" if $verbose > 1;
+    die "Questionnaire unsatisfactory link not found" if ($questionnaire_email !~ m#^\s*($base_url/U/.*$)#m);
+    my $unsatisfactory_link = $1;
+    $wth->email_check_url($unsatisfactory_link);
+    print "Questionnaire 'unsatisfactory' URL is $unsatisfactory_link\n" if $verbose > 1;
+    die "Questionnaire not expected link not found" if ($questionnaire_email !~ m#^\s*($base_url/E/.*$)#m);
+    my $not_expected_link = $1;
+    $wth->email_check_url($not_expected_link);
+    print "Questionnaire 'not expected' URL is $not_expected_link\n" if $verbose > 1;
+
+    $wth->browser_get($yes_link);
+    $wth->browser_check_contents('Great! Many, many thanks for your feedback.');
+}
+
+#############################################################################
+
+sub do_send_blocked_message {
+    set_base_url("");
+    set_fyr_date('1990-06-30', undef, $verbose);
+
+    # Go to abuse rules page
+    $wth->browser_get($admin_url);    
+    $wth->browser_follow_link(text_regex => qr/Message Abuse Rules/);
+    # ... check no existing rules
+    $wth->browser_check_no_contents('View');
+
+    # ... make new rule
+    $wth->browser_follow_link(text_regex => qr/New rule/);
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm',
+        fields => {}, button => 'newfilter');
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm', 
+        fields => { 
+            note => 'Block quicker than you can imagine',
+            sequence => 1,
+            requests => 0, interval => 0,
+            message => 'freeze',
+            field1 => 'message_length_characters',
+            condition1 => '+<',
+            value1 => '200',
+        }, 
+        button => 'done');
+    $wth->browser_check_contents('Block quicker than you can imagine');
+
+
+    $options->{base_url} = $base_url;
+    my $repinfo = {repname => $CAMBRIDGE_MP};
+
+    # The message shouldn't be delivered, as it should be frozen
+    send_message_to_rep(1, 
+        'CB23QJ', # The Guildhall, Cambridge 
+        { 
+            writer_address1 => '23 Something Street',
+            writer_town => 'Someplace',
+            state => 'Someshire',
+            writer_phone => undef,
+            body => "V. short"
+        }, 
+        $repinfo, 
+        $options 
+    );
+
+    confirm_message(1, $repinfo, $options);
+
+    call_fyrqd($wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+
+    # Check for email telling the constituent that their message wasn't sent
+    set_fyr_date('1990-07-08', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    my $confirmation_email = $wth->email_get_containing(
+        [ -and =>
+            '%To: "'.name_n(1).'" <'.email_n(1).'>%',
+            "%Subject: Unfortunately, we couldn't send your message to $CAMBRIDGE_MP MP%",
+            '%We\'re very sorry, but it wasn\'t possible to send your letter%'
+        ]);
+}
+
+#############################################################################
+
+sub do_test_bounce_stuff {
+    set_base_url("");
+    set_fyr_date('1990-08-30', undef, $verbose);
+
+    $options->{base_url} = $base_url; 
+    my $repinfo = {repname => $CAMBRIDGE_MP};
+
+    # TODO: This doesn't work yet. It is meant to test failing bad contacts.
+    # Really we need to turn off the test mode, and have a real representative
+    # in DaDem that can be failed. That's pretty complicated to set up - need
+    # a test DaDem database as well, really.
+    #send_message_to_rep(666, # invalid email address, for reflected email 
+    #                         # (send_message_to_rep has a hack to do confirm)
+    #    'CB23QJ', # The Guildhall, Cambridege 
+    #    { 
+    #        writer_address1 => '82 Mouse Road',
+    #        writer_town => 'Cheeseland',
+    #        state => 'Emmentalshire',
+    #        writer_phone => undef,
+    #        body => "I think that more cheese should be sent to more mice. How are the mignon little souris meant to be happy when they aren't fully fed with the freshest, creamiest, tastiest coagulated, separated milk curd?"
+    #    }, 
+    #    $repinfo, 
+    #    $options 
+    #);
+
+    #confirm_message(0, $repinfo, $options);
+    #check_delivered_to_rep(0, "$CAMBRIDGE_MP MP", '82 Mouse Road', $options);
+
+    # Pretend to be somebody replying to a questionnaire message
+    # - the message is just hard wired here as that is easiest.
+    my $user_name = name_n(5);
+    my $user_email = email_n(5);
+    my $bounce_address = mySociety::Config::get('EMAIL_PREFIX') . "DO-NOT-REPLY@" . mySociety::Config::get('EMAIL_DOMAIN');
+    my $in_reply_to = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxx@" . mySociety::Config::get('EMAIL_DOMAIN');
+    my $message_id = "19900830153005.GA19047@" . mySociety::Config::get('EMAIL_DOMAIN');
+
+    # Send message with confirmation link ...
+    my $msg = <<END;
+Date: Thu, 30 Aug 1990 16:30:05 +0100
+From: $user_name <$user_email>
+To: WriteToThem <$bounce_address>
+Subject: Re: Please confirm that you want to send a message to Ouch Ooch MP
+Message-ID: <$message_id>
+References: <$in_reply_to>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <$in_reply_to>
+User-Agent: Mutt/1.5.11
+Status: RO
+
+Yes yes yes!
+
+On Mon, Jan 01, 1990 at 03:04:58PM +0000, WriteToThem wrote:
+> Please click on the link below to confirm that you wish WriteToThem.com
+> to send the letter copied at the bottom of this email to Ouch Ooch
+> MP, your MP:
+> 
+>     $base_url/C/xxxxxx2xxx/2xxxxx2x2xxxxxxx2xx
+> 
+> If your email program does not let you click on this link, just copy
+> and paste it into your web browser and press return.
+>
+> ... snipped for brevity ...
+> 
+> -- the WriteToThem.com team
+END
+    mySociety::EmailUtil::send_email($msg, $user_email, $bounce_address);
+    # ... check that user gets autoresponse
+    $wth->email_get_containing([ -and => '%To: <'.email_n(5).'>%', '%This is an automatic response%']);
+    $wth->email_check_none_left();
+
+    # Send message without link ...
+    $msg = <<END;
+Date: Thu, 30 Aug 1990 16:30:05 +0100
+From: $user_name <$user_email>
+To: WriteToThem <$bounce_address>
+Subject: This is a test message
+Message-ID: <$message_id>
+References: <$in_reply_to>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <$in_reply_to>
+User-Agent: Mutt/1.5.11
+Status: RO
+
+Woot woot woot!
+END
+    mySociety::EmailUtil::send_email($msg, $user_email, $bounce_address);
+    # .. check that administrator gets the message
+    $wth->email_get_containing([ -and => '%To: WriteToThem <'.$bounce_address.'>%', '%Woot woot woot!%' ]);
+    $wth->email_check_none_left();
+
+    # Send message with questionnaire links ...
+    $msg = <<END;
+Date: Thu, 30 Aug 1990 16:30:05 +0100
+From: $user_name <$user_email>
+To: WriteToThem <$bounce_address>
+Subject: Did your MP reply to your letter?
+Message-ID: <$message_id>
+References: <$in_reply_to>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <$in_reply_to>
+User-Agent: Mutt/1.5.11
+Status: RO
+
+I don't like this questionnaire, I am instead going to tell you much
+more about my MP's responsiveness in free text.
+
+On Sat, Nov 26, 2005 at 09:30:50PM +0000, WriteToThem wrote:
+> Two weeks ago we sent your letter to $CAMBRIDGE_MP MP.
+>
+> - If you HAVE had a reply, please click on the link below:
+>
+>     $base_url/Y/xxxxxxxxxxxxxxxxx22xxxxxxxxx2
+>
+> - If you HAVE NOT had a reply, please click on the link below:
+>
+>     $base_url/N/xxxxxxxxxxxxxx2xx22xxxxxxxxx2
+>
+> ... snipped for brevity ...
+END
+    mySociety::EmailUtil::send_email($msg, $user_email, $bounce_address);
+    # ... check that user gets autoresponse
+    $wth->email_get_containing([ -and => '%To: <'.email_n(5).'>%', '%This is an automatic response%' ]);
+    $wth->email_check_none_left();
+}
+
+#############################################################################
+
+sub do_send_lords_message {
+    set_base_url("");
+    set_fyr_date('1992-01-01', undef, $verbose);
+    $options->{base_url} = $base_url; 
+    $options->{birthday} = '23 July';
+    my $repinfo = {repname => 'Lord Rogers'}; # Subject: in confirmation email wraps, so just check without "of Riverside"
+
+    send_message_to_rep(50, 
+        'PE35 6EN',
+        { 
+            writer_address1 => '99 Subject\'s Square',
+            writer_town => 'Plebsville',
+            state => 'Fiefdom',
+            writer_phone => undef,
+            body => "I know it is odd for somebody to write to a Lord, as they are not officially representative. However, they ought to respond to the needs and wants of the country, because that's the right thing to do. So I'm writing to you anyway, so altering reality to be as I want, by assuming that it already is."
+        },
+        $repinfo, 
+        $options
+    );
+
+    confirm_message(50, $repinfo, $options);
+    check_delivered_to_rep(50, 'Lord Rogers of Riverside', '99 Subject\\\'s Square', $options);
+
+    # 2 days to get over bounce_wait
+    spin_queue('1992-01-%02d', 2, 4, $wth, $verbose, $multispawn);
+    # 13 days after sending, no questionnaire
+    spin_queue('1992-01-%02d', 4, 15, $wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+    # 14th day provokes sending of questionnaire
+    set_fyr_date('1992-01-15', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    my $questionnaire_email = $wth->email_get_containing(
+        [ -and =>
+            '%To: "'.name_n(50).'" <'.email_n(50).'>%',
+            '%Subject: Did your Lord reply to your letter?%',
+            '%Two weeks ago we sent your letter to Lord Rogers of Riverside%'
+        ]);
+    $wth->email_check_none_left();
+
+    # Get links from questionnaire email
+    die "Questionnaire yes link not found" if ($questionnaire_email !~ m#^\s*($base_url/Y/.*$)#m);
+    my $yes_link = $1;
+    $wth->email_check_url($yes_link);
+    print "Questionnaire 'yes' URL is $yes_link\n" if $verbose > 1;
+    die "Questionnaire no link not found" if ($questionnaire_email !~ m#^\s*($base_url/N/.*$)#m);
+    my $no_link = $1;
+    $wth->email_check_url($no_link);
+    print "Questionnaire 'no' URL is $no_link\n" if $verbose > 1;
+    die "Questionnaire unsatisfactory link not found" if ($questionnaire_email !~ m#^\s*($base_url/U/.*$)#m);
+    my $unsatisfactory_link = $1;
+    $wth->email_check_url($unsatisfactory_link);
+    print "Questionnaire 'unsatisfactory' URL is $unsatisfactory_link\n" if $verbose > 1;
+    die "Questionnaire not expected link not found" if ($questionnaire_email !~ m#^\s*($base_url/E/.*$)#m);
+    my $not_expected_link = $1;
+    $wth->email_check_url($not_expected_link);
+    print "Questionnaire 'not expected' URL is $not_expected_link\n" if $verbose > 1;
+    $options->{birthday} = undef;
+}
+
+#############################################################################
+sub send_fax($$$$$$;$$){
+    my ($email_num, $dummy_fax, $repeat_text, $postcode, $repname, $fields, $birthday, $recipient_via) = @_;
+
+    $options->{base_url} = $base_url;
+    $options->{birthday} = $birthday;
+    my $repinfo = {repname => $repname};
+    my $body = "Dear Tester,This is a test message which shouldn't ever get to a real representative. It is intended to test the layout of messages that need to be delivered by fax. The fax layout should be flexible enough to be able to deal with both long and short messages. This one, as it happens, is somewhere in between.";
+    for (my $i=1; $i<=$repeat_text; ++$i) {
+        $body = $body . $body; 
+    }
+    $fields->{body} = $body;
+    send_message_to_rep($email_num, $postcode, $fields, $repinfo, $options);
+    confirm_message($email_num, $repinfo, $options);
+    
+    # Set a dummy fax number on the message and erase the recipient email
+    dbh()->do("update message set recipient_fax = ?, recipient_email = null, no_questionnaire = 't' where sender_email = ?", {}, $dummy_fax, email_n($email_num));
+    dbh()->commit();
+    if ($recipient_via){
+        # Set a via flag on the message 
+        dbh()->do("update message set recipient_via = 't' where sender_email = ?", {},  email_n($email_num));
+        dbh()->commit();  
+    }
+    $options->{birthday} = undef;
+    
+}
+#############################################################################
+
+sub do_send_fax_message {
+    set_base_url("");
+
+    # Make sure we're in working hours
+    set_fyr_date('1995-01-01', '12:00:00', $verbose);
+    
+    my $postcode = 'CB23QJ';
+    my $repname = $CAMBRIDGE_MP;
+    my $fields = { writer_address1 => '75 Toner Place',
+                   writer_town => 'Paper Lane',
+                   state => 'Facsimileshire',
+                   writer_phone => undef
+                };  
+    # set up a couple of fax messages
+    my $first_dummy_fax = '0000';
+    my $second_dummy_fax = '0001';
+    send_fax(6, $first_dummy_fax, 1, $postcode, $repname, $fields);
+    send_fax(14, $second_dummy_fax, 1, $postcode, $repname, $fields);
+
+    # Run the queue in fax mode
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+
+    # Check that a one page fax is sent to each 
+    $wth->fax_get_sent_to($first_dummy_fax, 1);
+    $wth->fax_get_sent_to($second_dummy_fax, 1);
+
+    # try a via message
+    my $dummy_fax = '0001';
+    send_fax(8, $dummy_fax, 1, $postcode, $repname, $fields, undef, 1);
+
+    # Run the queue in fax mode
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+
+    # Check that a two page fax is sent (one page and one cover)
+    $wth->fax_get_sent_to($dummy_fax, 2);
+
+    # Try a multiple page message 
+    $dummy_fax = '0002';
+
+    send_fax(9, $dummy_fax, 3, $postcode, $repname, $fields);
+
+    # Run the queue in fax mode
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+
+    # Check that a two page fax is sent
+    $wth->fax_get_sent_to($dummy_fax, 2);
+    
+    # Check that a fax won't be sent out of hours
+    set_fyr_date('1995-01-01', '21:00:00', $verbose);
+    send_fax(15, $dummy_fax, 1, $postcode, $repname, $fields);
+    
+    # Run the queue in fax mode
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+    $wth->fax_check_none_left();
+    
+    # Check that a fax to the Lords will be sent out of hours
+    # Relies on FAX_LORDS_OUTSIDE_FAX_HOURS being set to 1 for the testharness
+    my $lords_dummy_fax = '0003';
+    send_fax(16, $lords_dummy_fax, 1, 'PE35 6EN', 'Lord Rogers', $fields, '23 July', 1);
+ 
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+    # If a Lords message is being sent 'via', we don't add a cover page
+    $wth->fax_get_sent_to($lords_dummy_fax, 1);
+    
+    # next day time, other fax should get sent
+    set_fyr_date('1995-01-02', '10:00:00',  $verbose);
+    call_fyrqd($wth, $verbose, $multispawn, '--fax');
+    $wth->fax_get_sent_to($dummy_fax, 1);
+    
+    $wth->fax_check_none_left();
+    $options->{birthday} = undef;
+    
+}
+
+#############################################################################
+sub do_send_group_abuse {
+    set_base_url("");
+    set_fyr_date('1990-07-30', undef, $verbose);
+    # Go to abuse rules page
+    $wth->browser_get($admin_url);
+    $wth->browser_follow_link(text_regex => qr/Message Abuse Rules/);
+    # Test that the abuse rule is there
+    $wth->browser_check_contents('Block quicker than you can imagine');
+
+    $options->{base_url} = $base_url;
+    my $repinfo = {repname => 'all', 
+                   repnames => \@rep_names, 
+                   reptype => 'MEPs'};
+
+    # All mails in a group should be checked for abuse
+    send_message_to_rep(10,
+                        'CB23QJ', # The Guildhall, Cambridge
+                        {
+                           writer_address1 => '44 Multiple Street',
+                           writer_town => 'Batchcester',
+                           state => 'Groupshire',
+                           writer_phone => undef,
+                           body => "V. short"
+                        },
+                        $repinfo, 
+                        $options);
+    confirm_message(10, $repinfo, $options);
+    # None of the messages in the group should be sent
+    call_fyrqd($wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+
+    # Check for email telling the constituent that their messages weren't sent
+    set_fyr_date('1990-08-08', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    my $rep_name;
+    my $confirmation_email;
+    foreach $rep_name (@rep_names){
+        # long header lines are wrapped so this fixes a long name
+        # being wrapped
+        $rep_name =~ s/Campbell Bannerman/Campbell/;
+        $confirmation_email = $wth->email_get_containing(
+            [ -and =>
+                '%To: "'.name_n(10).'" <'.email_n(10).'>%',
+                '%Subject: Unfortunately, we couldn\'t send your message to '. $rep_name .'%',
+                '%We\'re very sorry, but it wasn\'t possible to send your letter%'
+            ]);
+
+    }
+
+    # Check that rules are applied correctly to individual mails in a group
+    # ... make a new Ratty rule for similar messages to different reps
+    # Go to abuse rules page
+    $wth->browser_get($admin_url);
+    $wth->browser_follow_link(text_regex => qr/Message Abuse Rules/);
+    $wth->browser_follow_link(text_regex => qr/New rule/);
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm',
+                              fields => {}, button => 'newfilter');
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm',
+                              fields => {
+            note => 'Similar body, different rep',
+            sequence => 2,
+            requests => 0, interval => 0,
+            message => 'freeze',
+            field1 => 'similarity_num_0.5',
+            condition1 => '+>',
+            value1 => '1',
+        },
+                              button => 'done');
+
+    $wth->browser_check_contents('Similar body, different rep');
+
+    # Make a new rule for similar messages to the same rep
+    # Go to abuse rules page
+    $wth->browser_get($admin_url);
+    $wth->browser_follow_link(text_regex => qr/Message Abuse Rules/);
+
+    $wth->browser_follow_link(text_regex => qr/New rule/);
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm',
+                              fields => {}, button => 'newfilter');
+    $wth->browser_submit_form(form_name => 'adminRattyRuleForm',
+                              fields => {
+            note => 'Similar body, same rep',
+            sequence => 2,
+            requests => 0, interval => 0,
+            message => 'freeze',
+            field1 => 'similarity_samerep_num_0.5',
+            condition1 => '+>',
+            value1 => '0',
+        },
+        button => 'done');
+    $wth->browser_check_contents('Similar body, same rep');
+   
+    $repinfo = {repname => $mep_rep_name};
+    # This message should get through
+    send_message_to_rep(11,
+                        'CB23QJ', # The Guildhall, Cambridge
+                        {
+                          writer_address1 => '23 Something Street',
+                          writer_town => 'Someplace',
+                          state => 'Someshire',
+                          writer_phone => undef,
+                          body => "This is a duplicate of another mail. It is identical in every respect. Even close friends could not tell the two apart. Every thought and phrasing is identical, so that a naive observer might conclude that there is some cut-and-pasting going on. Of course, appearances can be deceiving, so perhaps it is just a coincidence. "
+                        },
+                        $repinfo, 
+                        $options);
+    confirm_message(11, $repinfo, $options);
+
+    # All these messages should get through except the one to the same rep
+    $repinfo = {repname => 'all',
+                reptype => 'MEPs', 
+                repnames => \@rep_names};
+    send_message_to_rep(12,
+                        'CB23QJ', # The Guildhall, Cambridge
+                        {
+                         writer_address1 => '44 Multiple Street',
+                         writer_town => 'Batchcester',
+                         state => 'Groupshire',
+                         writer_phone => undef,
+                         body => "This is a duplicate of another mail. It is identical in every respect. Even close friends could not tell the two apart. Every thought and phrasing is identical, so that a naive observer might conclude that there is some cut-and-pasting going on. Of course, appearances can be deceiving, so perhaps it is just a coincidence. "
+                        },
+                        $repinfo, 
+                        $options);
+    confirm_message(12, $repinfo, $options);
+    call_fyrqd($wth, $verbose, $multispawn);
+    # First mail sent
+    check_delivered_to_rep(11, $mep_rep_name, '23 Something Street', $options);
+
+    # Check for successes and for email telling group constituent that one message wasn't sent
+    set_fyr_date('1990-08-17', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    foreach $rep_name (@rep_names){
+        if ($rep_name ne $mep_rep_name){
+            check_delivered_to_rep(12, $rep_name, '44 Multiple Street', $options);
+        }else{
+            $confirmation_email = $wth->email_get_containing(
+                [ -and =>
+                    '%To: "'.name_n(12).'" <'.email_n(12).'>%',
+                    '%Subject: Unfortunately, we couldn\'t send your message to '. $rep_name .'%',
+                    '%We\'re very sorry, but it wasn\'t possible to send your letter%'
+                ]);
+        }
+    }
+    # None of these messages should get through
+    my @new_rep_names = ('Richard Howlett', 'Alex Hollingsworth');
+    $repinfo = {repname => 'all', 
+                reptype => 'District', # should be District Councillors but wrapping
+                repnames => \@new_rep_names};
+    send_message_to_rep(13,
+                        'OX 13d R', # Lincoln college, Oxford
+                        {
+                         writer_address1 => '32 Wheresome Wroad',
+                         writer_town => 'Whereville',
+                         state => 'Whereex',
+                         writer_phone => undef,
+                         body => "This is a duplicate of another mail. It is identical in every respect. Even close friends could not tell the two apart. Every thought and phrasing is identical, so that a naive observer might conclude that there is some cut-and-pasting going on. Of course, appearances can be deceiving, so perhaps it is just a coincidence. "},
+                        $repinfo, 
+                        $options);
+    confirm_message(13, $repinfo, $options);
+    set_fyr_date('1990-08-26', undef, $verbose);
+    call_fyrqd($wth, $verbose, $multispawn);
+    foreach $rep_name (@new_rep_names){
+            # long lines are wrapped and our string matching is dumb so
+            # truncate the long name
+            $rep_name =~ s/Alex Hollingsworth/Alex/;
+            $confirmation_email = $wth->email_get_containing(
+                [ -and =>
+                    '%To: "'.name_n(13).'" <'.email_n(13).'>%',
+                    '%Subject: Unfortunately, we couldn\'t send your message to Cllr '. $rep_name .'%',
+                    '%We\'re very sorry, but it wasn\'t possible to send your letter%'
+                ]);
+        }
+
+    # Get rid of the rules we created so they don't affect the other tests
+    mySociety::Ratty::admin_delete_rules('fyr-abuse');
+
+}
+
+
+
+#############################################################################
+
+sub do_send_group_message {
+    set_base_url("");
+    set_fyr_date('1994-01-01', undef, $verbose);
+    $options->{base_url} = $base_url;
+    my $repinfo = {repname => 'all',
+                   repnames => \@rep_names,
+                   reptype => 'MEPs'};
+                   
+    send_message_to_rep(7,
+                        'CB23QJ', # The Guildhall, Cambridge 
+                        {
+                         writer_address1 => '44 Multiple Street', 
+                         writer_town => 'Batchcester',
+                         state => 'Groupshire',
+                         writer_phone => undef,
+                         body => "Dear Tester,This is a test message which shouldn't ever get to a real representative. When you have a really big problem, sometimes it can help to write to everyone who might be able to help. On the other hand that may just mean that everyone assumes that someone else has dealt with it."
+                        },
+                        $repinfo, 
+                        $options);
+    
+    confirm_message(7, $repinfo, $options);
+    # check that all the reps got the message and that it lets 
+    # them know the message was sent to others 
+    my $rep_name;
+    foreach $rep_name (@rep_names){
+        check_delivered_to_rep(7, $rep_name, '44 Multiple Street', $options);
+    }
+
+    # Check that a questionnaire is never sent for a group mail
+    # 2 days to get over bounce_wait
+    spin_queue('1994-01-%02d', 2, 4, $wth, $verbose, $multispawn);
+    # 13th day after sending, no questionnaire
+    spin_queue('1994-01-%02d', 4, 15, $wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+    # 14th day after sending, still no questionnaire
+    set_fyr_date('1994-01-15', undef, $verbose);
+    $wth->email_check_none_left();
+    # 6 days more, no reminder
+    spin_queue('1994-01-%02d', 16, 22, $wth, $verbose, $multispawn);
+    $wth->email_check_none_left();
+    # 7th day, still no reminder
+    set_fyr_date('1994-01-22', undef, $verbose);
+    $wth->email_check_none_left();
+}
+
+sub do_admin_confirm_group_message {
+    # Check admin can group confirm them all.
+    # Also handily tests admin search, admin Confirm button, etc.
+    set_base_url("");
+    set_fyr_date('1994-01-01', undef, $verbose);
+    $options->{base_url} = $base_url;
+    my $repinfo = { repname => 'all', repnames => \@rep_names, reptype => 'MEPs' };
+
+    send_message_to_rep(7, 'CB23QJ', {
+         writer_address1 => '44 Multiple Street',
+         writer_town => 'Batchcester',
+         state => 'Groupshire',
+         writer_phone => undef,
+         body => "Dear Tester,This is a test message which shouldn't ever get to a real representative. When you have a really big problem, sometimes it can help to write to everyone who might be able to help. On the other hand that may just mean that everyone assumes that someone else has dealt with it."
+    }, $repinfo, $options);
+
+    call_fyrqd($wth, $verbose, $multispawn);
+    my $confirmation_email = $wth->email_get_containing('%');
+
+    $wth->browser_get($admin_url);
+    $wth->browser_follow_link( text_regex => qr/Message Queue/ );
+    $wth->browser_submit_form( with_fields => { query => email_n(7) }, button => 'search' );
+
+    $wth->browser_follow_link( url_regex => qr/page=fyrqueue&id=/ );
+    $wth->browser_submit_form( form_name => 'messageForm', fields => {}, button => 'ready' );
+
+    # check that all the reps got the message and that it lets
+    # them know the message was sent to others
+    foreach my $rep_name (@rep_names) {
+        check_delivered_to_rep(7, $rep_name, '44 Multiple Street', $options);
+    }
+    $wth->email_check_none_left();
+}
+
+#############################################################################
+
+sub do_run_unit_tests {
+    my $testdir = '../t';
+    opendir(DIR, $testdir);
+    my @testfiles = grep(/\.t$/,readdir(DIR));
+    closedir(DIR);
+    @testfiles = map {$testdir . '/' . $_} @testfiles;
+    foreach my $file (@testfiles) {
+       print "$file\n";
+    }
+    runtests( @testfiles ); 
+}
+
+#############################################################################
+
+sub do_test_mistyped_postcode {
+    $wth->browser_get($base_url);
+    $wth->browser_check_contents($expected_messages->{enter_postcode});
+    $wth->browser_submit_form(
+        with_fields => { pc => 'SWIA IAA' },
+    );
+    $wth->browser_check_contents($expected_messages->{select_rep});
+}
+
+#############################################################################
+
+=comment
+sub do_send_bouncing_message() {
+    set_base_url("");
+    $options->{base_url} = $base_url;
+    my $repinfo = {repname => $CAMBRIDGE_MP};
+                   
+    send_message_to_rep(0, 
+                        'CB23QJ', # The Guildhall, Cambridge 
+                        { 
+                         writer_address1 => '10 Boing Boing Land',
+                         writer_town => 'Springy Street',
+                         state => 'Thumpshire',
+                         writer_phone => '01234 567890',
+                         body => "Bouncing message this is.  A test."
+                        }, 
+                        $repinfo, 
+                        $options 
+                        );
+    confirm_message(0, $repinfo, $options);
+    my $content = check_delivered_to_rep(0, $CAMBRIDGE_MP, 'Boing Boing Land', $options);
+
+    # Now fake that it bounced
+    call_handlemail($content);
+
+    # Find message in admin interface
+    $wth->browser_get($admin_url);    
+    $wth->browser_follow_link(text_regex => qr/Message Queue/);
+    $wth->browser_follow_link(text_regex => qr/Recent Created/);
+    $wth->browser_check_contents('<b>frozen</b>');
+}
+=cut
