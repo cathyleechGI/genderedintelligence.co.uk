@@ -134,11 +134,13 @@
      - page: Therapists and Counsellors Directory
        url: professionals/therapists-and-counsellors/directory.html
 - page: About Us
+  icon: fas fa-info-circle
   subnav:
      - page: About GI
        url: about-us/our-aims.html
      - page: Meet the team
        url: about-us/the-team.html
+       icon: fas fa-users
        icon: icon-subway
      - page: Team blog
        url: "https://genderedintelligence.wordpress.com/"
@@ -171,6 +173,7 @@
        url: http://twitter.com/genderintell
      - page: Office Details
        url: contact/office.html
+       icon: fas fa-thumbtack
      - page: Media Enquiries
        url: contact/media.html
      - page: Casting Calls
