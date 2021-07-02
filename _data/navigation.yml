@@ -94,6 +94,7 @@
        icon: icon-book
      - page: Workshops and Assemblies
        url: professionals/schools-and-youth-services/creative-workshops.html
+       icon: icon-at
      - page: Mentoring
        url: professionals/mentoring.html
      - page: Training
