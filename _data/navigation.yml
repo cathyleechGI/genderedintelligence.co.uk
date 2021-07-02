@@ -64,6 +64,7 @@
      - page: NEW Residential Resource
        url: residential-resource.html
 - page: For Professionals
+  icon: fas fa-user-tie
   subnav:
      - page: Overview of Services
        url: professionals/overview.html
@@ -90,6 +91,7 @@
        url: professionals/mailinglist.html
        icon: icon-envelope-alt
 - page: Educational Settings
+  icon: fas fa-graduation-cap
   subnav:
      - page: Overview
        url: support/education-schools.html
@@ -104,6 +106,7 @@
      - page: Professional Consultancy
        url: education/professional-consultancy.html
 - page: Projects
+  icon: fas fa-clipboard-list
   subnav:
      - page: Support Line
        url: projects/supportline.html
@@ -128,6 +131,7 @@
      - page: Previous Projects
        url: projects/project-list.html
 - page: Therapists and Counsellors
+  icon: fas fa-comment-dots
   subnav:
      - page: Therapists and Counsellors Network
        url: professionals/therapists-and-counsellors.html
@@ -136,7 +140,7 @@
      - page: Therapists and Counsellors Directory
        url: professionals/therapists-and-counsellors/directory.html
 - page: About Us
-  icon: fas fa-info-circle
+  icon: fas fa-info
   subnav:
      - page: About GI
        url: about-us/our-aims.html
@@ -160,6 +164,7 @@
      - page: Conferences
        url: about/conferences.html
 - page: Contact
+  icon: far fa-envelope
   subnav:
      - page: Email
        url: contact/email.html
