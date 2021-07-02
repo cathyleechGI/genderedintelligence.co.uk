@@ -9,7 +9,7 @@
      - page: Awareness Days
        url: awarenessdays.html
 - page: Support us
-  icon: angellist
+  icon: icon-angellist
   subnav:
      - page: Donate
        url: support-us/donate.html
@@ -41,10 +41,10 @@
   subnav:
      - page: Support for Young People
        url: support/trans-youth.html
-       icon: child
+       icon: icon-child
      - page: Youth Groups for Young Trans and Gender Variant People
        url: trans-youth/youth-group.html
-       icon: campground
+       icon: icon-campground
      - page: Resources for Young People
        url: trans-youth/resources.html
      - page: Camping Trips
