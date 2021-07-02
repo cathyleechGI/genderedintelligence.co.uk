@@ -4,8 +4,10 @@
   subnav:
      - page: Latest news
        url: latest.html
+       icon: hand-peace
      - page: Blog
        url: "https://genderedintelligence.wordpress.com/"
+       icon: icon-hand-peace
      - page: Awareness Days
        url: awarenessdays.html
 - page: Support us
