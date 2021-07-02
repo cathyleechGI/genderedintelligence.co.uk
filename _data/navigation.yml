@@ -7,15 +7,15 @@
        icon: fas fa-newspaper
      - page: Blog
        url: "https://genderedintelligence.wordpress.com/"
-       icon: icon-hand-peace
+       icon: i class="fab fa-microblog
      - page: Awareness Days
        url: awarenessdays.html
 - page: Support us
-  icon: icon-angellist
+  icon: fas fa-hand-holding-medical
   subnav:
      - page: Donate
        url: support-us/donate.html
-       icon: icon-gift
+       icon: fas fa-pound-sign
      - page: Volunteer
        url: support-us/volunteer.html
        icon: icon-heart
@@ -29,7 +29,8 @@
        icon: icon-star
      - page: Updates
        url: covid19/index.html
-- page: Campaigns
+- icon: fas fa-fist-raised
+  page: Campaigns
   subnav:
      - page: Our Campaigns
        url: ourcampaigns.html
