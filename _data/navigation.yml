@@ -41,9 +41,10 @@
   subnav:
      - page: Support for Young People
        url: support/trans-youth.html
-       icon: icon-star
+       icon: child
      - page: Youth Groups for Young Trans and Gender Variant People
        url: trans-youth/youth-group.html
+       icon: campground
      - page: Resources for Young People
        url: trans-youth/resources.html
      - page: Camping Trips
