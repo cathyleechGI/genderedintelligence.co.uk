@@ -22,6 +22,7 @@
      - page: Youth Group Volunteer
        url: support-us/youthgroupvolunteer.html
 - page: COVID-19
+  icon: fas fa-head-side-mask
   subnav:
      - page: Resources Hub
        url: resources/covid19.html
