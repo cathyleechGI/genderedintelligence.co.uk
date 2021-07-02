@@ -4,7 +4,7 @@
   subnav:
      - page: Latest news
        url: latest.html
-       icon: hand-peace
+       icon: fas fa-address-book
      - page: Blog
        url: "https://genderedintelligence.wordpress.com/"
        icon: icon-hand-peace
