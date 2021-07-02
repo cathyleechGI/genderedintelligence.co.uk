@@ -22,7 +22,7 @@
      - page: Youth Group Volunteer
        url: support-us/youthgroupvolunteer.html
 - page: COVID-19
-  icon: fas fa-head-side-mask
+  icon: fas fa-house-user
   subnav:
      - page: Resources Hub
        url: resources/covid19.html
@@ -40,7 +40,7 @@
      - page: Our responses to the GRA
        url: gra/ourresponse.html
 - page: Young People & Families
-  icon: icon-heart
+  icon: fas fa-child
   subnav:
      - page: Support for Young People
        url: support/trans-youth.html
