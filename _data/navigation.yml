@@ -1,17 +1,16 @@
 - page: Home
   url: index.html
 - page: What's New
-  icon: fas fa-newspaper
   subnav:
      - page: Latest news
        url: latest.html
+       icon: fas fa-newspaper
      - page: Blog
        url: "https://genderedintelligence.wordpress.com/"
-       icon: i class="fab fa-microblog
+       icon: fab fa-microblog
      - page: Awareness Days
        url: awarenessdays.html
 - page: Support us
-  icon: fas fa-hand-holding-medical
   subnav:
      - page: Donate
        url: support-us/donate.html
@@ -21,19 +20,19 @@
        icon: icon-heart
      - page: Youth Group Volunteer
        url: support-us/youthgroupvolunteer.html
+       icon: fas fa-hand-holding-medical
 - page: COVID-19
-  icon: fas fa-house-user
   subnav:
      - page: Resources Hub
        url: resources/covid19.html
-       icon: icon-star
+       icon: fas fa-house-user
      - page: Updates
        url: covid19/index.html
-- icon: fas fa-fist-raised
-  page: Campaigns
+- page: Campaigns
   subnav:
      - page: Our Campaigns
        url: ourcampaigns.html
+       icon: fas fa-fist-raised
      - page: BAEB
        url: campaigns/baeb.html
      - page: Briefings and guides
@@ -41,18 +40,18 @@
      - page: Our responses to the GRA
        url: gra/ourresponse.html
 - page: Young People & Families
-  icon: fas fa-child
   subnav:
      - page: Support for Young People
        url: support/trans-youth.html
-       icon: icon-child
+       icon: fas fa-child
      - page: Youth Groups for Young Trans and Gender Variant People
        url: trans-youth/youth-group.html
-       icon: icon-campground
+       icon: fas fa-users
      - page: Resources for Young People
        url: trans-youth/resources.html
      - page: Camping Trips
        url: camping.html
+       icon: fas fa-campground
      - page: Support for Families
        url: families/group.html
      - page: Resources for Families
@@ -64,10 +63,10 @@
      - page: NEW Residential Resource
        url: residential-resource.html
 - page: For Professionals
-  icon: fas fa-user-tie
   subnav:
      - page: Overview of Services
        url: professionals/overview.html
+       icon: fas fa-user-tie
      - page: Consultancy - Trans Inclusion and Equality
        url: professionals/policy.html
      - page: Online training and remote services
@@ -76,6 +75,7 @@
        url: professionals/training.html
      - page: Speakers and Panellists
        url: professionals/speakers.html
+       icon: fas fa-chalkboard-teacher
      - page: Education & Other Youth Settings
        url: professionals/education.html
      - page: Mentoring Scheme
@@ -84,18 +84,18 @@
        url: professionals/partnerships.html
      - page: Sport and Physical Activity
        url: sport.html
+       icon: fas fa-futbol
      - page: Resources
-       icon: icon-book
+       icon: fas fa-book-open
        url: for-professionals/resources.html
      - page: Professional Services Mailing List
        url: professionals/mailinglist.html
        icon: icon-envelope-alt
 - page: Educational Settings
-  icon: fas fa-graduation-cap
   subnav:
      - page: Overview
        url: support/education-schools.html
-       icon: icon-book
+       icon: fas fa-graduation-cap
      - page: Workshops and Assemblies
        url: professionals/schools-and-youth-services/creative-workshops.html
        icon: icon-at
@@ -106,7 +106,6 @@
      - page: Professional Consultancy
        url: education/professional-consultancy.html
 - page: Projects
-  icon: fas fa-clipboard-list
   subnav:
      - page: Support Line
        url: projects/supportline.html
@@ -131,23 +130,22 @@
      - page: Previous Projects
        url: projects/project-list.html
 - page: Therapists and Counsellors
-  icon: fas fa-comment-dots
   subnav:
      - page: Therapists and Counsellors Network
        url: professionals/therapists-and-counsellors.html
+       icon: fas fa-comment-dots
      - page: Therapists and Counsellors Training
        url: professionals/therapists-and-counsellors/training.html
      - page: Therapists and Counsellors Directory
        url: professionals/therapists-and-counsellors/directory.html
 - page: About Us
-  icon: fas fa-info
   subnav:
      - page: About GI
        url: about-us/our-aims.html
+       icon: fas fa-info
      - page: Meet the team
        url: about-us/the-team.html
        icon: fas fa-users
-       icon: icon-subway
      - page: Team blog
        url: "https://genderedintelligence.wordpress.com/"
      - page: Join the team
@@ -164,11 +162,10 @@
      - page: Conferences
        url: about/conferences.html
 - page: Contact
-  icon: far fa-envelope
   subnav:
      - page: Email
        url: contact/email.html
-       icon: icon-envelope
+       icon: far fa-envelope
      - page: Mailing List
        url: contact/mailing-list.html
        icon: icon-envelope-alt
@@ -187,4 +184,3 @@
        url: contact/casting.html
 - page: Support Line
   url: projects/supportline.html
-  icon: icon-phone
