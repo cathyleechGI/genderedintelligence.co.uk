@@ -39,13 +39,14 @@
 							{% else %}
 								<li>
 							{% endif %}
-								{% if item.url %}<a href="/{{ item.url }}">{% endif %}
-										{{ item.page }}
+								| {% if item.url %}<a href="/{{ item.url }}">{% endif %}
 										{% if item.icon %}<i class="{{item.icon}}"></i>{% endif %}
+									{{ item.page }}
+										
 								{% if item.url %}</a>{% endif %}
 
 								{% if item.subnav %}
-										<i class="fas fa-angle-double-down"></i>|
+										<i class="fas fa-angle-double-down"></i> |
 									</a>
 									<ul class="dropdown-menu">
 										{% for subitem in item.subnav %}
