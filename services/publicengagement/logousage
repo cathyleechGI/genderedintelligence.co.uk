@@ -1,0 +1,91 @@
+---
+title: Gendered Intelligence's logo
+---
+
+<style>
+	.font-face {
+    font-family: "CooperBlkBTBlack";
+    src: url("/static/fonts/cooper_black.eot");
+    src: url("/static/fonts/cooper_black.eot?#iefix") format("embedded-opentype"), url("/static/fonts/cooper_black.woff") format("woff"), url("/static/fonts/cooper_black.ttf") format("truetype"),
+        url("/static/fonts/cooper_black.svg#CooperBlkBTBlack") format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+	
+.peng {
+    background: #912884;
+    background-image: url("/static/images/box-background.png");
+    background: url("/static/images/box-background.png"), -webkit-gradient(linear, left bottom, left top, color-stop(0, #e72168), color-stop(1, #fc518e));
+    background: url("/static/images/box-background.png"), -ms-linear-gradient(bottom, #e72168, #fc518e);
+    background: url("/static/images/box-background.png"), -moz-linear-gradient(center bottom, #e72168 0, #fc518e 100%);
+    color: #fff;
+    padding: 3px 10px 10px;
+    margin-bottom: 5px;
+    height:300px;
+	width:25%;
+	}
+	
+.pes {
+    background: #912884;
+    background-image: url("/static/images/box-background.png");
+    background: url("/static/images/box-background.png"), -webkit-gradient(linear, left bottom, left top, color-stop(0, #1d82b6), color-stop(1, #48ade0));
+    background: url("/static/images/box-background.png"), -ms-linear-gradient(bottom, #1d82b6, #48ade0);
+    background: url("/static/images/box-background.png"), -moz-linear-gradient(center bottom, #1d82b6 0, #48ade0 100%);
+    color: #fff;
+    padding: 3px 10px 10px;
+    margin-bottom: 0px;
+	    height:300px;
+	width:25%;
+}
+.wie {
+    background: #912884;
+    background-image: url("/static/images/box-background.png");
+    background: url("/static/images/box-background.png"), -webkit-gradient(linear, left bottom, left top, color-stop(0, #5e9d5b), color-stop(1, #5bb856));
+    background: url("/static/images/box-background.png"), -ms-linear-gradient(bottom, #5e9d5b, #5bb856);
+    background: url("/static/images/box-background.png"), -moz-linear-gradient(center bottom, 5e9d5b 0, #5bb856 100%);
+    color: #fff;
+    padding: 3px 10px 10px;
+    margin-bottom: 0px;
+	    height:300px;
+	width:25%;
+}
+.yc {
+    background: #912884;
+    background-image: url("/static/images/box-background.png");
+    background: url("/static/images/box-background.png"), -webkit-gradient(linear, left bottom, left top, color-stop(0, #f39639), color-stop(1, #ffb061));
+    background: url("/static/images/box-background.png"), -ms-linear-gradient(bottom, #f39639, #ffb061);
+    background: url("/static/images/box-background.png"), -moz-linear-gradient(center bottom, #f39639 0, #ffb061 100%);
+    color: #fff;
+    padding: 3px 10px 10px;
+    margin-bottom: 0px;
+	    height:300px;
+	width:25%;
+}
+</style>
+
+					<p align="right" style="font-family:'Helvetica';font-size:10pt;font-style:helvetica;font:helvetica"><b>Page created</b>: 07 July 2021<br><b>Last updated</b>: 07 July 2021<br>——————————————</p>
+
+
+<h2>Our logo and how to use it/h2>
+
+<p>You can download our logo below. It is available in 'default' (for use with white and light backgrounds) and 'dark' (for use with black or dark backgrounds). It is available to use in both square (preferred) and wide versions.</p>
+
+<p>Notes:</p>
+
+<ul><li><b>We no longer use</b> the line "increasing understandings of gender diversity" with our logo by default. You may continue to use this version of the logo in limited circumstances, but the simple logo is preferred usage.</li>
+<li><b>Do not</b> alter the logo in any way without prior agreement from Gendered Intelligence.</li>
+<li><b>Do</b> always include our full name (<i>Gendered Intelligence</i>) in our logo, and do not use the speech bubble by itself.</li></ul>
+
+<p><br><br></p>
+
+<h2>Fonts</h2>
+
+<p>The logo uses Cooper Black. Any additional text - which must be cleared with Gendered Intelligence before using - must be in Cooper BT Light.</p>
+
+<h2>Colours</h2><p>
+
+The Gendered Intelligence default purple is:
+<br>PRINT 51,98,9,1<br>
+SCREEN 147,36,123<br>
+HEX #93247b
+
