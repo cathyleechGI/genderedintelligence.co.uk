@@ -8537,7 +8537,6 @@ font-color: #000000;
 .toplogo {overflow: visible;
   margin-bottom: 12pt;
   position: fixed;
-  *z-index: 1;
 .navbar-inner {
   min-height: 40px;
   padding-left: 20px;
