@@ -1967,7 +1967,6 @@ table [class*=span],
     -------------------------------------------------------
     The full suite of pictographic icons, examples, and documentation
     can be found at: http://fortawesome.github.com/Font-Awesome/
-
     License
     -------------------------------------------------------
     The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
@@ -1977,13 +1976,11 @@ table [class*=span],
     If human readable source code is not available to the end user, a mention in
     an 'About' or 'Credits' screen is considered acceptable (most common in desktop
     or mobile software).
-
     Contact
     -------------------------------------------------------
     Email: dave@davegandy.com
     Twitter: http://twitter.com/fortaweso_me
     Work: Lead Product Designer @ http://kyruus.com
-
     */
 @font-face {
   font-family: 'FontAwesome';
@@ -8531,11 +8528,9 @@ font-color: #000000;
   overflow: visible;
   margin-bottom: 12pt;
   color: #777777;
-  *position: fixed;
+  *position: relative;
+  *z-index: 2;
 }
-.toplogo {overflow: visible;
-  margin-bottom: 12pt;
-  position: fixed;
 .navbar-inner {
   min-height: 40px;
   padding-left: 20px;
