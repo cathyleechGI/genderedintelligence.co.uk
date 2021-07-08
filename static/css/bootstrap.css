@@ -8532,7 +8532,6 @@ font-color: #000000;
   margin-bottom: 12pt;
   color: #777777;
   *position: fixed;
-  *z-index: 2;
 }
 .toplogo {overflow: visible;
   margin-bottom: 12pt;
