@@ -1,6 +1,6 @@
 - page: Home
   url: index.html
-- page: What's New
+  - page: What's New
   subnav:
      - page: Latest news
        url: latest.html
@@ -10,6 +10,29 @@
        icon: fab fa-microblog
      - page: Awareness Days
        url: awarenessdays.html
+  - page: About Us
+  subnav:
+     - page: About GI
+       url: about-us/our-aims.html
+       icon: fas fa-info
+     - page: Meet the team
+       url: about-us/the-team.html
+       icon: fas fa-users
+     - page: Team blog
+       url: "https://genderedintelligence.wordpress.com/"
+     - page: Join the team
+       url: about/join-the-team.html
+     - page: Funding
+       url: about-us/funding.html
+     - page: Reports & Resources
+       url: about-us/reports-and-resources.html
+       icon: icon-book
+     - page: Data Protection
+       url: data.html
+     - page: Safeguarding
+       url: safeguarding.html
+     - page: Conferences
+       url: about/conferences.html
 - page: Support us
   subnav:
      - page: Donate
@@ -28,11 +51,6 @@
        icon: fas fa-house-user
      - page: Updates
        url: covid19/index.html
-       subsubfolderitems:
-          - page: Subthing 1
-            url: /subthing1.html
-          - page: Subthing 2
-            url: /subthing2.html
 - page: Campaigns
   subnav:
      - page: Our Campaigns
@@ -145,29 +163,6 @@
        url: professionals/therapists-and-counsellors/training.html
      - page: Therapists and Counsellors Directory
        url: professionals/therapists-and-counsellors/directory.html
-- page: About Us
-  subnav:
-     - page: About GI
-       url: about-us/our-aims.html
-       icon: fas fa-info
-     - page: Meet the team
-       url: about-us/the-team.html
-       icon: fas fa-users
-     - page: Team blog
-       url: "https://genderedintelligence.wordpress.com/"
-     - page: Join the team
-       url: about/join-the-team.html
-     - page: Funding
-       url: about-us/funding.html
-     - page: Reports & Resources
-       url: about-us/reports-and-resources.html
-       icon: icon-book
-     - page: Data Protection
-       url: data.html
-     - page: Safeguarding
-       url: safeguarding.html
-     - page: Conferences
-       url: about/conferences.html
 - page: Contact
   subnav:
      - page: Email
@@ -191,17 +186,3 @@
        url: contact/casting.html
 - page: Support Line
   url: projects/supportline.html
-toc2:
-  - title: Group 1
-    subfolderitems:
-      - page: Thing 1
-        url: /thing1.html
-      - page: Thing 2
-        url: /thing2.html
-        subsubfolderitems:
-          - page: Subthing 1
-            url: /subthing1.html
-          - page: Subthing 2
-            url: /subthing2.html
-      - page: Thing 3
-        url: /thing3.html
