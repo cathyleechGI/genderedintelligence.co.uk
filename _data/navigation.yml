@@ -1,6 +1,6 @@
-  - page: Home
+- page: Home
   url: index.html
-  - page: What's New
+- page: What's New
   subnav:
      - page: Latest news
        url: latest.html
@@ -10,7 +10,7 @@
        icon: fab fa-microblog
      - page: Awareness Days
        url: awarenessdays.html
-  - page: About Us
+- page: About Us
   subnav:
      - page: About GI
        url: about-us/our-aims.html
