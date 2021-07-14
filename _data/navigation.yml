@@ -112,7 +112,7 @@
        url: education/professional-consultancy.html
 - page: Projects
   subnav:
-      - page: Quality of Life Survey
+     - page: Quality of Life Survey
        url: projects/quality-of-life-survey
        icon: fas fa-star
      - page: Support Line
