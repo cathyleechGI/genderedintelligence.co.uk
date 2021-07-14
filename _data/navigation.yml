@@ -1,4 +1,4 @@
-- page: Home
+  - page: Home
   url: index.html
   - page: What's New
   subnav:
