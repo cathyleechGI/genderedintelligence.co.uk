@@ -107,28 +107,30 @@
        url: education/professional-consultancy.html
 - page: Projects
   subnav:
+      - page: Quality of Life Survey
+       url: projects/quality-of-life-survey
+       icon: fas fa-star
      - page: Support Line
        url: projects/supportline.html
-     - page: Adventures in Time and Gender
-       url: AdventuresTimeGender.html
-     - page: Knowledge is Power
-       url: projects/kip.html
      - page: GIANTS
        url: projects/GIANTS.html
      - page: TransActing
        url: "http://transacting.co.uk/"
-     - page: The Corpse Project
-       url: projects/the-corpse-project.html
-     - page: Quality of Life Survey
-       url: projects/quality-of-life-survey
-     - page: "Collective Resilience: 18-30 Therapy Group"
-       url: projects/collective-resilience.html
      - page: Trans Inclusion in Sport
        url: project/trans-inclusion-in-sport.html
+     - page: "Collective Resilience: 18-30 Therapy Group"
+       url: projects/collective-resilience.html
+     - page: Adventures in Time and Gender
+       url: AdventuresTimeGender.html
+     - page: Knowledge is Power
+       url: projects/kip.html
      - page: Transvengers at the Wellcome Collection
        url: transvengers.html
+     - page: The Corpse Project
+       url: projects/the-corpse-project.html
      - page: Previous Projects
        url: projects/project-list.html
+       
 - page: Therapists and Counsellors
   subnav:
      - page: Therapists and Counsellors Network
