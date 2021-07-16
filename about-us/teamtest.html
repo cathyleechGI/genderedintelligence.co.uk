@@ -4,10 +4,10 @@ title: Meet the Team
 <script type="text/javascript">
 function change( el )
 {
-    if ( el.value === "More info" )
-        el.value = "Less info";
+    if ( el.value === "More info ▼" )
+        el.value = "Less info ▲";
     else
-        el.value = "More info";
+        el.value = "More info ▼";
 }
 </script>
 
@@ -64,7 +64,7 @@ html {
   font-size:10pt;
 }
 
-.button {
+.buttonmore {
   border: none;
   outline: 0;
   display: inline-block;
@@ -76,7 +76,7 @@ html {
   width: 100%;
 }
 
-.button:hover {
+.buttonmore:hover {
   background-color: #fdebff;
   color: black;
 }
@@ -93,7 +93,7 @@ html {
         <h2>Jay</h2>
         <p class="title">CEO/Co-founder of Gendered Intelligence</p>
         <p>he/him</p>
-        <p><input type="button" class="button" data-toggle="collapse" data-target="#jay" value="More info" onclick="return change(this);"/>
+        <p><input type="buttonmore" class="button" data-toggle="collapse" data-target="#jay" value="More info ▼" onclick="return change(this);"/>
                   </input></center></p>
   <div id="jay" class="collapse">
     
