@@ -1,17 +1,12 @@
 @font-face {
    font-family: "Cooper Md BT";
-   src: url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
-   src: url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot?#iefix")
-         format("embedded-opentype"),
-      url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.woff2")
-         format("woff2"),
-      url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.woff")
-         format("woff"),
-      url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.ttf")
-         format("truetype"),
-      url("//db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.svg#Cooper Md BT")
-         format("svg");
-}
+   src: url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.eot"); /* IE9*/
+   src: url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+   url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.woff2") format("woff2"), /* chrome、firefox */
+   url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.woff") format("woff"), /* chrome、firefox */
+   url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+   url("/static/fonts/cooper-ft/5a2d744f08ebe9cbea82e94d86efece9.svg#Cooper Md BT Medium") format("svg"); /* iOS 4.1- */
+ }
 
 @font-face {
    font-family: "CooperBlkBTBlack";
