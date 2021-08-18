@@ -112,7 +112,7 @@ nav a:visited {
     display: flex;
   }
   .mega-menu a:hover {
-    background: #dceced;
+    background: #f5e4f4;
     color: #136a73;
   }
   .mega-menu--multiLevel > li {
@@ -139,7 +139,7 @@ nav a:visited {
   .mega-menu--multiLevel li:hover > a,
   .mega-menu--multiLevel li:focus-within > a {
     background: #f5e4f4;
-    color: #fce8fa;
+    color: #f5e4f4;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul,
   .mega-menu--multiLevel [aria-haspopup="true"] {
