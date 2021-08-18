@@ -24,7 +24,7 @@ body {
 
 // ------------------ SHARED STYLES
 
-nav {
+nav1 {
    ul, li {
      list-style: none;
      padding: 0;
@@ -39,12 +39,12 @@ nav {
   }
 }
 
-.menu-bar {
+.menu-bar1 {
   background: @color-light;
   display: flex;
 }
 
-.menu-link {
+.menu-link1 {
   padding: @menu-link-padding;
   background: @color-light;
   color: @color-accent;
@@ -68,19 +68,19 @@ nav {
   }
 }
 
-.mega-menu-header {
+.mega-menu-header1 {
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: bold;
   color: darken(@color-accent, 5%);
 }
 
-.mega-menu {
+.mega-menu1 {
   background: @color-light;
   z-index: 10;
 }
 
-.mega-menu--multiLevel {
+.mega-menu1--multiLevel {
   flex-direction: column;
 }
 
@@ -90,7 +90,7 @@ nav {
 @media all and (min-width: @breakpoint + 1px) {
   // Desktop only
   
-  .nav {
+  .nav1 {
     margin-top: 50px;
     background: @color-light;
     > nav {
@@ -99,7 +99,7 @@ nav {
     }
   }
   
-  .menu {
+  .menu1 {
     [aria-haspopup="true"] {
       ~ ul {
         display: none;
@@ -107,7 +107,7 @@ nav {
     }
   }
   
-  .menu-bar {
+  .menu-bar1 {
     position: relative;
     > li {
       > [aria-haspopup="true"] {
@@ -159,7 +159,7 @@ nav {
     }
   }
   
-  .mega-menu {
+  .mega-menu1 {
     // LAYOUT: Mega menu
     position: absolute;
     top: 100%;
@@ -178,7 +178,7 @@ nav {
   }
  
   
-  .mega-menu--multiLevel {
+  .mega-menu1--multiLevel {
     // LAYOUT: Multi level columns
     > li {
       width: @mega-menu-multiLevel-colWidth;
@@ -249,7 +249,7 @@ nav {
   }
   
   // Hide mobile specific elements
-  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
+  .mobile-menu-trigger1, .mobile-menu-header1, .mobile-menu-back-item1 {
     display: none;
   }
 
@@ -257,15 +257,15 @@ nav {
 
 @media all and (max-width: @breakpoint) {
     
-  .nav {
+  .nav1 {
     padding: 20px;
   }
   
-  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
+  .mobile-menu-trigger1, .mobile-menu-header1, .mobile-menu-back-item1 {
     display: block;
   }
   
-  .mobile-menu-trigger {
+  .mobile-menu-trigger1 {
     background: @color-accent;
     color: @color-light;
     border: 0;
@@ -274,7 +274,7 @@ nav {
     border-radius: 4px;
   }
   
-  .mobile-menu-header {
+  .mobile-menu-header1 {
     order: -1;
     background: grey;
     a {
@@ -284,7 +284,7 @@ nav {
     }
   }
   
-  .menu-bar {
+  .menu-bar1 {
     flex-direction: column;
     position: fixed;
     top: 0;
@@ -352,11 +352,11 @@ nav {
   }
  
   
-  .mega-menu-content {
+  .mega-menu-content1 {
     padding: @menu-link-padding;
   }
   
-  .mobile-menu-back-item {
+  .mobile-menu-back-item1 {
     order: -1;
     a {
       background: tint(grey, 70%);
@@ -378,7 +378,7 @@ nav {
   
   // ------------------------ ALL DEVICES
   
-  .mobile-menu-trigger {
+  .mobile-menu-trigger1 {
     // FUNCTIONALITY: Open mobile menu
     &:focus {
       ~ ul {
@@ -387,7 +387,7 @@ nav {
     }
   }
   
-  .menu-bar {
+  .menu-bar1 {
     // FUNCTIONALITY: Keep menu open
     &:hover, &:focus-within {
       left: 0;
@@ -443,7 +443,7 @@ nav {
   @media (hover: none) {
     
     // FUNCTIONALITY: Open mobile menu 
-    .mobile-menu-trigger {
+    .mobile-menu-trigger1 {
       &:hover {
         ~ ul {
           left: 0;
@@ -452,7 +452,7 @@ nav {
     }
     
     // FUNCTIONALITY: Open mega menu
-    .menu-bar {
+    .menu-bar1 {
       > li {
         > [aria-haspopup="true"] {
           &:hover {
