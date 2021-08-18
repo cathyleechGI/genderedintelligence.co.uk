@@ -138,8 +138,8 @@ nav a:visited {
   .mega-menu--multiLevel li:focus-within > [aria-haspopup="true"],
   .mega-menu--multiLevel li:hover > a,
   .mega-menu--multiLevel li:focus-within > a {
-    background: #dceced;
-    color: #136a73;
+    background: #f5e4f4;
+    color: #fce8fa;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul,
   .mega-menu--multiLevel [aria-haspopup="true"] {
