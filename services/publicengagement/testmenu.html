@@ -1,8 +1,8 @@
-<title>newnew</title>
+<title>giving up</title>
 
-<link href="/static/css/newmenu.css" rel="stylesheet" type="text/css">
 
 <style>
+    
     @color-accent:                      #177E89;
 @color-light:                       #ffffff;
 @color-dark:                        #2a2a2a;
@@ -29,7 +29,7 @@ body {
 
 // ------------------ SHARED STYLES
 
-nav1 {
+nav {
    ul, li {
      list-style: none;
      padding: 0;
@@ -44,12 +44,12 @@ nav1 {
   }
 }
 
-.menu-bar1 {
+.menu-bar {
   background: @color-light;
   display: flex;
 }
 
-.menu-link1 {
+.menu-link {
   padding: @menu-link-padding;
   background: @color-light;
   color: @color-accent;
@@ -73,19 +73,19 @@ nav1 {
   }
 }
 
-.mega-menu-header1 {
+.mega-menu-header {
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: bold;
   color: darken(@color-accent, 5%);
 }
 
-.mega-menu1 {
+.mega-menu {
   background: @color-light;
   z-index: 10;
 }
 
-.mega-menu1--multiLevel {
+.mega-menu--multiLevel {
   flex-direction: column;
 }
 
@@ -95,7 +95,7 @@ nav1 {
 @media all and (min-width: @breakpoint + 1px) {
   // Desktop only
   
-  .nav1 {
+  .nav {
     margin-top: 50px;
     background: @color-light;
     > nav {
@@ -104,7 +104,7 @@ nav1 {
     }
   }
   
-  .menu1 {
+  .menu {
     [aria-haspopup="true"] {
       ~ ul {
         display: none;
@@ -112,7 +112,7 @@ nav1 {
     }
   }
   
-  .menu-bar1 {
+  .menu-bar {
     position: relative;
     > li {
       > [aria-haspopup="true"] {
@@ -164,7 +164,7 @@ nav1 {
     }
   }
   
-  .mega-menu1 {
+  .mega-menu {
     // LAYOUT: Mega menu
     position: absolute;
     top: 100%;
@@ -183,7 +183,7 @@ nav1 {
   }
  
   
-  .mega-menu1--multiLevel {
+  .mega-menu--multiLevel {
     // LAYOUT: Multi level columns
     > li {
       width: @mega-menu-multiLevel-colWidth;
@@ -262,15 +262,15 @@ nav1 {
 
 @media all and (max-width: @breakpoint) {
     
-  .nav1 {
+  .nav {
     padding: 20px;
   }
   
-  .mobile-menu-trigger1, .mobile-menu-header1, .mobile-menu-back-item1 {
+  .mobile-menu-trigger, .mobile-menu-header, .mobile-menu-back-item {
     display: block;
   }
   
-  .mobile-menu-trigger1 {
+  .mobile-menu-trigger {
     background: @color-accent;
     color: @color-light;
     border: 0;
@@ -279,7 +279,7 @@ nav1 {
     border-radius: 4px;
   }
   
-  .mobile-menu-header1 {
+  .mobile-menu-header {
     order: -1;
     background: grey;
     a {
@@ -289,7 +289,7 @@ nav1 {
     }
   }
   
-  .menu-bar1 {
+  .menu-bar {
     flex-direction: column;
     position: fixed;
     top: 0;
@@ -357,11 +357,11 @@ nav1 {
   }
  
   
-  .mega-menu-content1 {
+  .mega-menu-content {
     padding: @menu-link-padding;
   }
   
-  .mobile-menu-back-item1 {
+  .mobile-menu-back-item {
     order: -1;
     a {
       background: tint(grey, 70%);
@@ -383,7 +383,7 @@ nav1 {
   
   // ------------------------ ALL DEVICES
   
-  .mobile-menu-trigger1 {
+  .mobile-menu-trigger {
     // FUNCTIONALITY: Open mobile menu
     &:focus {
       ~ ul {
@@ -392,7 +392,7 @@ nav1 {
     }
   }
   
-  .menu-bar1 {
+  .menu-bar {
     // FUNCTIONALITY: Keep menu open
     &:hover, &:focus-within {
       left: 0;
@@ -448,7 +448,7 @@ nav1 {
   @media (hover: none) {
     
     // FUNCTIONALITY: Open mobile menu 
-    .mobile-menu-trigger1 {
+    .mobile-menu-trigger {
       &:hover {
         ~ ul {
           left: 0;
@@ -457,7 +457,7 @@ nav1 {
     }
     
     // FUNCTIONALITY: Open mega menu
-    .menu-bar1 {
+    .menu-bar {
       > li {
         > [aria-haspopup="true"] {
           &:hover {
@@ -524,162 +524,162 @@ nav1 {
 }
 </style>
 
-<div class="nav1">
+<div class="nav">
     <nav>
-        <a href="javascript:void(0);" class="mobile-menu-trigger1">Open mobile menu</a>
-        <ul class="menu menu-bar1">
+        <a href="javascript:void(0);" class="mobile-menu-trigger">Open mobile menu</a>
+        <ul class="menu menu-bar">
             <li>
-                <a href="javascript:void(0);" class="menu-link1 menu-bar-link1" aria-haspopup="true">1. Multilevel mega
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">1. Multilevel mega
                     menu</a>
-                <ul class="mega-menu1 mega-menu1--multiLevel">
+                <ul class="mega-menu mega-menu--multiLevel">
                     <li>
                         <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">1.1 Flyout
                             link</a>
-                        <ul class="menu1 menu-list1">
+                        <ul class="menu menu-list">
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.1.1 Page link</a>
+                                <a href="/page" class="menu-link menu-list-link">1.1.1 Page link</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-link1 menu-list-link1"
+                                <a href="javascript:void(0);" class="menu-link menu-list-link"
                                     aria-haspopup="true">1.1.2 Flyout link</a>
-                                <ul class="menu1 menu-list1">
+                                <ul class="menu menu-list">
                                     <li>
-                                        <a href="/page" class="menu-link1 menu-list-link1">1.1.2.1 Page link</a>
+                                        <a href="/page" class="menu-link menu-list-link">1.1.2.1 Page link</a>
                                     </li>
                                     <li>
-                                        <a href="/page" class="menu-link1 menu-list-link1">1.1.2.2 Page link</a>
+                                        <a href="/page" class="menu-link menu-list-link">1.1.2.2 Page link</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.1.3 Page link</a>
+                                <a href="/page" class="menu-link menu-list-link">1.1.3 Page link</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="menu-link1 mega-menu-link1" aria-haspopup="true">1.2 Flyout
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">1.2 Flyout
                             link</a>
-                        <ul class="menu1 menu-list1">
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.2.1 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.2.2 Page link</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-link1 mega-menu-link1" aria-haspopup="true">1.3 Flyout
-                            link</a>
-                        <ul class="menu1 menu-list1">
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.3.1 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">1.3.2 Page link</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/page" class="menu-link1 mega-menu-link1">1.4 Page link</a>
-                    </li>
-                    <li class="mobile-menu-back-item1">
-                        <a href="javascript:void(0);" class="menu-link1 mobile-menu-back-link1">Back</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="javascript:void(0);" class="menu-link1 menu-bar-link1" aria-haspopup="true">2. Flat mega menu (3
-                    cols)</a>
-                <ul class="mega-menu1 mega-menu1--flat">
-                    <li>
-                        <a href="/page" class="menu-link1 mega-menu-link1 mega-menu-header1">2.1 Page link header</a>
-                        <ul class="menu1 menu-list1">
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.1.1 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.1.2 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.1.3 Page link</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/page" class="menu-link1 mega-menu-link1 mega-menu-header1">2.2 Page link header</a>
-                        <ul class="menu menu-list1">
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.2.1 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.2.2 Page link</a>
-                            </li>
-                            <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.2.3 Page link</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/page" class="menu-link1 mega-menu-link1 mega-menu-header1">2.3 Page link header</a>
                         <ul class="menu menu-list">
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.2.1 Page link</a>
+                                <a href="/page" class="menu-link menu-list-link">1.2.1 Page link</a>
                             </li>
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">2.2.2 Page link</a>
+                                <a href="/page" class="menu-link menu-list-link">1.2.2 Page link</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="mobile-menu-back-item1">
-                        <a href="javascript:void(0);" class="menu-link1 mobile-menu-back-link1">Back</a>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-link mega-menu-link" aria-haspopup="true">1.3 Flyout
+                            link</a>
+                        <ul class="menu menu-list">
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">1.3.1 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">1.3.2 Page link</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/page" class="menu-link mega-menu-link">1.4 Page link</a>
+                    </li>
+                    <li class="mobile-menu-back-item">
+                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
                     </li>
                 </ul>
             </li>
 
             <li>
-                <a href="javascript:void(0);" class="menu-link1 menu-bar-link1" aria-haspopup="true">3. Flat mega menu (2
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">2. Flat mega menu (3
                     cols)</a>
-                <ul class="mega-menu1 mega-menu1--flat">
+                <ul class="mega-menu mega-menu--flat">
                     <li>
-                        <a href="#" class="menu-link1 mega-menu-link1 mega-menu-header1">3.1 Page link header</a>
-                        <ul class="menu menu-list1">
+                        <a href="/page" class="menu-link mega-menu-link mega-menu-header">2.1 Page link header</a>
+                        <ul class="menu menu-list">
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">
+                                <a href="/page" class="menu-link menu-list-link">2.1.1 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.1.2 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.1.3 Page link</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/page" class="menu-link mega-menu-link mega-menu-header">2.2 Page link header</a>
+                        <ul class="menu menu-list">
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.2.1 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.2.2 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.2.3 Page link</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/page" class="menu-link mega-menu-link mega-menu-header">2.3 Page link header</a>
+                        <ul class="menu menu-list">
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.2.1 Page link</a>
+                            </li>
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">2.2.2 Page link</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="mobile-menu-back-item">
+                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:void(0);" class="menu-link menu-bar-link" aria-haspopup="true">3. Flat mega menu (2
+                    cols)</a>
+                <ul class="mega-menu mega-menu--flat">
+                    <li>
+                        <a href="#" class="menu-link mega-menu-link mega-menu-header">3.1 Page link header</a>
+                        <ul class="menu menu-list">
+                            <li>
+                                <a href="/page" class="menu-link menu-list-link">
                                     3.1.1 Page link<br />
                                     <small>Short decription of link</small>
                                 </a>
                             </li>
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">
+                                <a href="/page" class="menu-link menu-list-link">
                                     3.1.2 Page link<br />
                                     <small>Short decription of link</small>
                                 </a>
                             </li>
                             <li>
-                                <a href="/page" class="menu-link1 menu-list-link1">
+                                <a href="/page" class="menu-link menu-list-link">
                                     3.1.2 Page link<br />
                                     <small>Short decription of link</small>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="mega-menu-content1">
-                        <p class="mega-menu-header1">3.2 Page link header</p>
-                        <p>frgnjrekgbltjklbt.</p>
+                    <li class="mega-menu-content">
+                        <p class="mega-menu-header">3.2 Page link header</p>
+                        <p>finalllllll</p>
                     </li>
                     <li class="mobile-menu-back-item1">
-                        <a href="javascript:void(0);" class="menu-link1 mobile-menu-back-link1">Back</a>
+                        <a href="javascript:void(0);" class="menu-link mobile-menu-back-link">Back</a>
                     </li>
                 </ul>
             </li>
           
             <li>
-                <a href="/page" class="menu-link1 menu-bar-link1">Static link</a>
+                <a href="/page" class="menu-link menu-bar-link">Static link</a>
             </li>
 
-            <li class="mobile-menu-header1">
+            <li class="mobile-menu-header">
                 <a href="/home" class="">
                     <span>Home</span>
                 </a>
