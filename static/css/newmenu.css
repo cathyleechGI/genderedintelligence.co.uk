@@ -34,9 +34,9 @@ nav a:visited {
   display: flex;
 }
 .menu-link {
-  padding-top:10px;
-padding-bottom:10px;
-padding-left:10px;
+  padding-top:0px;
+padding-bottom:0px;
+padding-left:0px;
 padding-right:30px;
   background: #FAD2E0;
   color: #93247b;
@@ -253,7 +253,7 @@ padding-right:30px;
     transition: max-height 0.1s;
   }
   .mega-menu-content {
-    padding: 20px 25px;
+    padding: 0px 25px;
   }
   .mobile-menu-back-item {
     order: -1;
