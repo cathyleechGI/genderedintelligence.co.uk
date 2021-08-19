@@ -152,11 +152,11 @@ padding-right:10px;
   .mega-menu--multiLevel li:hover > a,
   .mega-menu--multiLevel li:focus-within > a {
     background: #f5e4f4;
-    color: #f5e4f4;
+    color: #000000;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul,
   .mega-menu--multiLevel [aria-haspopup="true"] {
-    border-left: 1px solid #f0f0f0;
+    border-left: 1px solid #000000;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul:hover,
   .mega-menu--multiLevel [aria-haspopup="true"]:hover {
