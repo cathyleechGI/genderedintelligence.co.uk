@@ -30,7 +30,7 @@ nav a:visited {
   text-decoration: none;
 }
 .menu-bar {
-  background: #FAD2E0;
+  background: #ffffff;
   display: flex;
 }
 .menu-link {
@@ -75,7 +75,7 @@ padding-right:30px;
 @media all and (min-width: 951px) {
   .nav {
     margin-top: 50px;
-    background: #FAD2E0;
+    background: #Ffffff;
   }
   .nav > nav {
     max-width: 900px;
