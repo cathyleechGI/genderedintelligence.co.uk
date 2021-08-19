@@ -17,7 +17,7 @@
 }
 nav ul,
 nav li {
-  list-style: inside url('https://upload.wikimedia.org/wikipedia/commons/c/ce/Font_Awesome_5_solid_arrow-circle-right.svg');
+  list-style: inside;
   padding: 0px;
   margin: 0;
 }
