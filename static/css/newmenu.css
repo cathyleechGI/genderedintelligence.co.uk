@@ -24,10 +24,10 @@ nav a:visited {
   display: flex;
 }
 .menu-link {
-  padding: 20px 25px;
+  padding: 25px 25px;
   background: #ffffff;
   color: #93247b;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.4s, color 0.4s;
   position: relative;
   z-index: 1;
 }
@@ -38,11 +38,11 @@ nav a:visited {
   content: "";
   background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg#accent');
   background-size: 14px;
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   font-size: 12px;
   position: absolute;
-  right: 10px;
+  right: 5px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -50,7 +50,7 @@ nav a:visited {
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: bold;
-  color: #136a73;
+  color: #93247b;
 }
 .mega-menu {
   background: #ffffff;
@@ -113,7 +113,7 @@ nav a:visited {
   }
   .mega-menu a:hover {
     background: #f5e4f4;
-    color: #136a73;
+    color: #93247b;
   }
   .mega-menu--multiLevel > li {
     width: 33.33333333%;
@@ -129,7 +129,7 @@ nav a:visited {
   .mega-menu--multiLevel li:hover > [aria-haspopup="true"] ~ ul {
     display: block;
     transform-origin: left;
-    animation: flyout 0.2s ease-out;
+    animation: flyout 0.4s ease-out;
   }
   .mega-menu--multiLevel li:focus-within > [aria-haspopup="true"] ~ ul {
     display: block;
@@ -173,7 +173,7 @@ nav a:visited {
     display: block;
   }
   .mobile-menu-trigger {
-    background: #177E89;
+    background: #f5e4f4;
     color: #ffffff;
     border: 0;
     padding: 10px;
