@@ -17,7 +17,7 @@
 }
 nav ul,
 nav li {
-  list-style: inside;
+  list-style: none;
   padding: 0px;
   margin: 0;
 }
