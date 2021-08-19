@@ -30,7 +30,7 @@ nav a:visited {
   text-decoration: none;
 }
 .menu-bar {
-  background: #ffffff;
+  background: #FAD2E0;
   display: flex;
 }
 .menu-link {
@@ -38,7 +38,7 @@ nav a:visited {
 padding-bottom:10px;
 padding-left:10px;
 padding-right:30px;
-  background: #ffffff;
+  background: #FAD2E0;
   color: #93247b;
   transition: background 0.4s, color 0.4s;
   position: relative;
@@ -66,7 +66,7 @@ padding-right:30px;
   color: #93247b;
 }
 .mega-menu {
-  background: #ffffff;
+  background: #FAD2E0;
   z-index: 10;
 }
 .mega-menu--multiLevel {
@@ -75,7 +75,7 @@ padding-right:30px;
 @media all and (min-width: 951px) {
   .nav {
     margin-top: 50px;
-    background: #ffffff;
+    background: #FAD2E0;
   }
   .nav > nav {
     max-width: 900px;
@@ -218,7 +218,7 @@ padding-right:30px;
   .menu-bar > li > [aria-haspopup="true"] ~ ul {
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: #FAD2E0;
     position: absolute;
     left: 100%;
     top: 0;
