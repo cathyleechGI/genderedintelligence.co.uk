@@ -267,10 +267,10 @@ padding-right:30px;
   }
   .mobile-menu-back-item a:before {
     content: "";
-    width: 14px;
-    height: 12px;
+    width: 18px;
+    height: 18px;
     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowLeft.svg');
-    background-size: 14px;
+    background-size: 18px;
     margin-right: 10px;
     display: inline-block;
   }
