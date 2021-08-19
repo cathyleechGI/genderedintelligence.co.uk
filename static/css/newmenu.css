@@ -156,7 +156,7 @@ padding-right:30px;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul,
   .mega-menu--multiLevel [aria-haspopup="true"] {
-    border-left: 1px solid #000000;
+    border-left: 3px solid #93247b;
   }
   .mega-menu--multiLevel [aria-haspopup="true"] ~ ul:hover,
   .mega-menu--multiLevel [aria-haspopup="true"]:hover {
