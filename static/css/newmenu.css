@@ -18,7 +18,7 @@
 nav ul,
 nav li {
   list-style: none;
-  padding: 5px;
+  padding: 20px;
   margin: 0;
 }
 nav a {
@@ -34,10 +34,10 @@ nav a:visited {
   display: flex;
 }
 .menu-link {
-  padding-top:0px;
-padding-bottom:0px;
-padding-left:0px;
-padding-right:30px;
+  padding-top:20px;
+padding-bottom:20px;
+padding-left:20px;
+padding-right:20px;
   background: #FAD2E0;
   color: #93247b;
   transition: background 0.4s, color 0.4s;
@@ -51,8 +51,8 @@ padding-right:30px;
   content: "";
   background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1397521/arrowRight.svg');
   background-size: 14px;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   font-size: 12px;
   position: absolute;
   right: 5px;
