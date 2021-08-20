@@ -26,11 +26,11 @@ body {
    background: #912884;
    background-image: url("/static/images/background.png");
    background: url("/static/images/background.png"),
-      -webkit-gradient(linear, left bottom, left top, color-stop(0, #80529a), color-stop(1, #908bf7));
+      -webkit-gradient(linear, left bottom, left top, color-stop(0, #E38FFF), color-stop(1, #A94FAB));
    background: url("/static/images/background.png"),
-      -ms-linear-gradient(bottom, #80529a, #908bf7);
+      -ms-linear-gradient(bottom, #E38FFF, #A94FAB);
    background: url("/static/images/background.png"),
-      -moz-linear-gradient(center bottom, #80529a 0, #908bf7 100%);
+      -moz-linear-gradient(center bottom, #E38FFF 0, #A94FAB 100%);
    padding-top: 0px;
 }
 .container {
