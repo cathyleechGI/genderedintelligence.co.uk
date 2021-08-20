@@ -46,7 +46,7 @@ padding-right:20px;
   z-index: 1;
 }
 .menu-link[aria-haspopup="true"] {
-  padding-right: 15px;
+  padding-right: 30px;
 }
 .menu-link[aria-haspopup="true"]:after {
   content: "";
