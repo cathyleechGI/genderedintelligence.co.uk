@@ -32,7 +32,6 @@ nav a:visited {
 .menu-bar {
   background: #FAD2E0;
   display: flex;
-  flex-wrap: wrap;
 }
 .menu-link {
   padding-top:20px;
