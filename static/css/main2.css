@@ -26,11 +26,11 @@ body {
    background: #912884;
    background-image: url("/static/images/background.png");
    background: url("/static/images/background.png"),
-      -webkit-gradient(linear, left bottom, left top, color-stop(0, #80529a), color-stop(1, #ad328a));
+      -webkit-gradient(linear, left bottom, left top, color-stop(0, #80529a), color-stop(1, #908bf7));
    background: url("/static/images/background.png"),
-      -ms-linear-gradient(bottom, #80529a, #ad328a);
+      -ms-linear-gradient(bottom, #80529a, #908bf7);
    background: url("/static/images/background.png"),
-      -moz-linear-gradient(center bottom, #80529a 0, #ad328a 100%);
+      -moz-linear-gradient(center bottom, #80529a 0, #908bf7 100%);
    padding-top: 0px;
 }
 .container {
@@ -148,11 +148,11 @@ footer.container {
    background: #912884;
    background-image: url("/static/images/box-background.png");
    background: url("/static/images/box-background.png"),
-      -webkit-gradient(linear, left bottom, left top, color-stop(0, #724989), color-stop(1, #992c7a));
+      -webkit-gradient(linear, left bottom, left top, color-stop(0, #221a4f), color-stop(1, #5127b3));
    background: url("/static/images/box-background.png"),
-      -ms-linear-gradient(bottom, #724989, #992c7a);
+      -ms-linear-gradient(bottom, #221a4f, #5127b3);
    background: url("/static/images/box-background.png"),
-      -moz-linear-gradient(center bottom, #724989 0, #992c7a 100%);
+      -moz-linear-gradient(center bottom, #221a4f 0, #5127b3 100%);
    color: #fff;
    padding: 3px 10px 10px;
    margin-bottom: 5px;
