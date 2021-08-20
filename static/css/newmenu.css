@@ -74,7 +74,7 @@ padding-right:20px;
 }
 @media all and (min-width: 951px) {
   .nav {
-    margin-top: 50px;
+    margin-top: 0px;
     background: #FAD2E0;
   }
   .nav > nav {
