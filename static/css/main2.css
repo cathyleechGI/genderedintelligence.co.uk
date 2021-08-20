@@ -40,7 +40,7 @@ body {
 }
 @media (min-width: 1000px) {
    .container {
-      width: 100%;
+      width: 90%;
    }
 }
 footer.container {
