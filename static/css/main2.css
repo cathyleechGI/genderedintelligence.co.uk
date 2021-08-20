@@ -148,11 +148,11 @@ footer.container {
    background: #912884;
    background-image: url("/static/images/box-background.png");
    background: url("/static/images/box-background.png"),
-      -webkit-gradient(linear, left bottom, left top, color-stop(0, #221a4f), color-stop(1, #5127b3));
+      -webkit-gradient(linear, left bottom, left top, color-stop(0, #4F9AAB), color-stop(1, #4F7AAB));
    background: url("/static/images/box-background.png"),
-      -ms-linear-gradient(bottom, #221a4f, #5127b3);
+      -ms-linear-gradient(bottom, #4F9AAB, #4F7AAB);
    background: url("/static/images/box-background.png"),
-      -moz-linear-gradient(center bottom, #221a4f 0, #5127b3 100%);
+      -moz-linear-gradient(center bottom, #4F9AAB 0, #4F7AAB 100%);
    color: #fff;
    padding: 3px 10px 10px;
    margin-bottom: 5px;
