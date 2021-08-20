@@ -23,7 +23,7 @@ html {
 }
 body {
    min-height: 100%;
-   background: #912884;
+   background: #E38FFF;
    background-image: url("/static/images/background.png");
    background: url("/static/images/background.png"),
       -webkit-gradient(linear, left bottom, left top, color-stop(0, #E38FFF), color-stop(1, #A94FAB));
@@ -145,7 +145,7 @@ footer.container {
    }
 }
 .bottom-boxes .span3 {
-   background: #912884;
+   background: #65878f;
    background-image: url("/static/images/box-background.png");
    background: url("/static/images/box-background.png"),
       -webkit-gradient(linear, left bottom, left top, color-stop(0, #4F9AAB), color-stop(1, #4F7AAB));
