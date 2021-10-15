@@ -171,6 +171,8 @@
      - page: Mailing List
        url: contact/mailing-list.html
        icon: icon-envelope-alt
+     - page: Recruitment Mailing List
+       url: contact/recruitment-mailing-list.html
      - page: Facebook
        url: "http://www.facebook.com/GenderedIntelligence"
        icon: icon-facebook
