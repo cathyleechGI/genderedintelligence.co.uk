@@ -9,7 +9,7 @@
        url: "https://genderedintelligence.wordpress.com/"
        icon: fab fa-microblog
      - page: Awareness Days
-       url: awarenessdays.html
+       url: services/publicengagement/awarenessdays/index.html
 - page: About Us
   subnav:
      - page: About GI
