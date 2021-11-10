@@ -77,39 +77,52 @@ border: 3px #93247b solid; background-color: #fae6ff;
 }
   
   .i {color: #93247b}
+ 
   
-.grid-container {
-  display: grid;
-  grid-template-columns: 80% 10% 10%;
-  background-color: #ffffff;
-  padding: 0px;
-  grid-column-gap: 5px;
+  
+  .grid-container {
+  display: grid; 
+  grid-template-columns: 50% 50%; 
+  grid-template-rows: 70.5px 33.5px; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "gridtitle gridtitle"
+    "uploadeddate updateddate"; 
 }
-.grid-item {
-  background-color: #93247b;
-  border: 0px dashed #93247b;
-  padding: 0px;
-  font-size: 8pt;
-  text-align: center;
-  font-family: "Cooper Md BT";
-  font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
-  color: #ffffff;
-}
-
-.gridtitle {
-
-  font-size: 20px;
+.gridtitle { grid-area: gridtitle;  font-size: 20px;
   font-family: "Cooper Md BT";
   font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
   font-weight: bold;
   text-transform: uppercase;
   color: #ffffff;
   align-items: center; 
-  justify-items: stretch;
-}
-  
+  justify-items: stretch; }
+.uploadeddate { grid-area: uploadeddate;   background-color: #93247b;
+  border: 0px dashed #93247b;
+  padding: 0px;
+  font-size: 8pt;
+  text-align: center;
+  font-family: "Cooper Md BT";
+  font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
+  color: #ffffff;}
+.updateddate { grid-area: updateddate;   background-color: #93247b;
+  border: 0px dashed #93247b;
+  padding: 0px;
+  font-size: 8pt;
+  text-align: center;
+  font-family: "Cooper Md BT";
+  font-src: url("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
+  color: #ffffff;}
   
 </style>
+
+
+<div class="container">
+  <div class="gridtitle"></div>
+  <div class="uploadeddate"></div>
+  <div class="updateddate"></div>
+</div>
+
 
 <div class="grid-container">
   <div class="grid-item gridtitle">
