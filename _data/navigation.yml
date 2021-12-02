@@ -56,8 +56,6 @@
      - page: Our Campaigns
        url: ourcampaigns.html
        icon: fas fa-fist-raised
-     - page: BAEB
-       url: campaigns/baeb.html
      - page: Briefings and guides
        url: briefings.html
      - page: Our responses to the GRA
