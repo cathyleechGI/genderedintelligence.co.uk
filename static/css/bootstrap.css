@@ -34,14 +34,14 @@ section {
   display: grid;
   grid-template-columns: 70% 15% 15%;
   background-color: #93247b;
-  padding: 5px;
+  padding: 3px;
   grid-column-gap: 1px;
 }
 .grid-item {
   background-color: #93247b;
   border: 0px dashed #93247b;
-  padding: 5px;
-  font-size: 8pt;
+  padding: 3px;
+  font-size: 6pt;
   text-align: center;
   font-family: "Cooper Md BT";
   font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
@@ -49,8 +49,8 @@ section {
 }
 
 .gridtitle {
-  padding:5px;
-  font-size: 30px;
+  padding:3px;
+  font-size: 25px;
   border-right: 1px dashed #ffffff;
   font-family: "Cooper Md BT";
   font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
