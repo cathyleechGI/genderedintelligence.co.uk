@@ -59,7 +59,7 @@
      - page: Briefings and guides
        url: services/publicengagement/briefings.html
      - page: Our responses to the GRA
-       url: gra/ourresponse.html
+       url: services/publicengagement/gra/our-responses.html
 - page: Young People & Families
   subnav:
      - page: Support for Young People
