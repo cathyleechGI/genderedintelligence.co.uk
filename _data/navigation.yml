@@ -28,9 +28,9 @@
        url: about-us/reports-and-resources.html
        icon: icon-book
      - page: Data Protection
-       url: data.html
+       url: about-us/data.html
      - page: Safeguarding
-       url: safeguarding.html
+       url: about-us/safeguarding.html
      - page: Conferences
        url: about-us/conferences.html
 - page: Support us
