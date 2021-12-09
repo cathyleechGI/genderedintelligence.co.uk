@@ -21,11 +21,12 @@ nav {
 
 article {
   display:grid;
-  grid-template-columns: auto max-content;
-}
+  grid-template-columns: auto max-content;}
+
 .update-times {text-align: right;
 	padding: 0px;
 	vertical-align:top;}
+
 .section-title {  padding: 0px;
 display: flex;
 background-color: #93247b;
@@ -40,7 +41,7 @@ background-color: #93247b;
   align-items:center;
   vertical-align: middle; 
   text-align: center; }
-article { background-color: black; border: 0px solid black; }
+
 section { background-color: #ffffff;
   border: none;
   padding: 0px;
