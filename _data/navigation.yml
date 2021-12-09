@@ -57,7 +57,7 @@
        url: ourcampaigns.html
        icon: fas fa-fist-raised
      - page: Briefings and guides
-       url: briefings.html
+       url: services/publicengagement/briefings.html
      - page: Our responses to the GRA
        url: gra/ourresponse.html
 - page: Young People & Families
