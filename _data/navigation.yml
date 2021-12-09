@@ -32,7 +32,7 @@
      - page: Safeguarding
        url: safeguarding.html
      - page: Conferences
-       url: about/conferences.html
+       url: about-us/conferences.html
 - page: Support us
   subnav:
      - page: Donate
