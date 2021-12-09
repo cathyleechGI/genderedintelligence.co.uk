@@ -9,17 +9,46 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
-article,
 details,
 figcaption,
 figure,
 footer,
 header,
 hgroup,
-nav,
-section {
+nav {
   display: block;
 }
+
+article {
+  display:grid;
+  grid-template-columns: auto max-content;
+}
+.update-times {text-align: right;
+	padding: 0px;
+	vertical-align:top;}
+.section-title {  padding: 0px;
+display: flex;
+background-color: #93247b;
+  font-size: 25px;
+  border-right: 1px solid #ffffff;
+  font-family: "Cooper Md BT";
+  font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  justify-content: center;
+  align-items:center;
+  vertical-align: middle; 
+  text-align: center; }
+article { background-color: black; border: 0px solid black; }
+section { background-color: #ffffff;
+  border: none;
+  padding: 0px;
+  font-size: 6pt;
+  font-family: "Cooper Md BT";
+  font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
+  color: #000000;}
+
 .white-popup {
   position: relative;
   background: #FFF;
