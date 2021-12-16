@@ -41,9 +41,6 @@
      - page: Volunteer
        url: support-us/volunteer.html
        icon: icon-heart
-     - page: Youth Group Volunteer
-       url: support-us/youthgroupvolunteer.html
-       icon: fas fa-hand-holding-medical
 - page: COVID-19
   subnav:
      - page: Resources Hub
