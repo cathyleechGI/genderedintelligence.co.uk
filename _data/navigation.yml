@@ -18,8 +18,6 @@
      - page: Meet the team
        url: about-us/the-team.html
        icon: fas fa-users
-     - page: Team blog
-       url: "https://genderedintelligence.wordpress.com/"
      - page: Join the team
        url: about-us/join-the-team.html
      - page: Funding
