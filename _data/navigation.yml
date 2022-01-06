@@ -83,10 +83,10 @@
      - page: Overview of Services
        url: professionals/overview.html
        icon: fas fa-user-tie
-     - page: Consultancy - Trans Inclusion and Equality
-       url: professionals/policy.html
      - page: Training
        url: professionals/training.html
+     - page: Consultancy - Trans Inclusion and Equality
+       url: professionals/policy.html
      - page: Speakers and Panellists
        url: professionals/speakers.html
        icon: fas fa-chalkboard-teacher
