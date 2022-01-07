@@ -42,6 +42,21 @@ background-color: #93247b;
   vertical-align: middle; 
   text-align: center; }
 
+.section-details {  padding: 5px;
+display: flex;
+background-color: #93247b;
+  font-size: 15px;
+  border-right: 1px solid #ffffff;
+  font-family: "Cooper Md BT";
+  font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+  justify-content: center;
+  align-items:center;
+  vertical-align: middle; 
+  text-align: center; }
+
 section { background-color: #ffffff;
   border: none;
   padding: 0px;
