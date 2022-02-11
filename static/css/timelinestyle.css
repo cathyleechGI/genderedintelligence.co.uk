@@ -17,6 +17,24 @@ html {
     box-sizing: inherit;
 }
 
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #93246b;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #fdebff;
+  color: black;
+}
+
+
 .blue {
 	color:#06F;
 	font-weight:normal;
