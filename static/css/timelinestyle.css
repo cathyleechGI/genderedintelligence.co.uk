@@ -257,8 +257,8 @@ html {
 
 .cd-timeline-img img {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     position: relative;
     left: 50%;
     top: 50%;
@@ -267,7 +267,7 @@ html {
 }
 
 .cd-timeline-img:hover {
-    background-color: #98d361;
+    background-color: #b884ac;
     cursor: pointer;
 }
 
