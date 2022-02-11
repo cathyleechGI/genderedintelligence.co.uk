@@ -392,7 +392,7 @@ html {
 .project-content {
     position: absolute;
     z-index: 999;
-    background-color: #eee;
+    background-color: #e6aad9;
     opacity: 0.9;
     top: 0;
     left: 0;
@@ -408,12 +408,13 @@ html {
 
 .project-content span {
     font-family: 'Verdana';
-    font-size: 12px;
+    font-size: 10pt;
     text-transform:;
-    color: #777;
+    color: #000000;
     margin-left: 15px;
     margin-top: -15px;
     padding-bottom: 10px;
+    padding-top: 10px;
     display: block;
 }
 
