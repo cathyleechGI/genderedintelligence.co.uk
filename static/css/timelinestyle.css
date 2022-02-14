@@ -50,6 +50,7 @@ html {
   font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
   font-weight: bold;
   text-transform: uppercase;
+  text-decoration: underline;
   color: #000000;
   padding-top: 10px;
     padding-left: 10px;
