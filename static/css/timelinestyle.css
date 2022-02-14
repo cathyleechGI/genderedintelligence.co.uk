@@ -59,6 +59,7 @@ html {
   text-align: center; 
 margin-top:10px;
 	margin-left:10px;
+	margin: 5px
   padding-top: 10px;
     padding-left: 5px;
     padding-right: 0px;
@@ -662,15 +663,7 @@ margin-top:10px;
     padding-bottom: 60px;
 }
 
-#cta h4 {
-    margin-top: 100px;
-    font-family: 'Dosis';
-    font-size: 42px;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #fff;
-}
+
 
 #cta p {
     font-family: 'Dosis';
@@ -689,15 +682,6 @@ margin-top:10px;
     height: 680px;
 }
 
-#map h4 {
-    margin-top: 100px;
-    font-family: 'Dosis';
-    font-size: 42px;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #fff;
-}
 
 #map p {
     font-family: 'Dosis';
@@ -766,13 +750,6 @@ form {
     margin-top: 60px;
 }
 
-.contact-discription h4 {
-    font-family: 'Dosis';
-    font-size: 22px;
-    font-weight: 600;
-    color: #333;
-    text-transform: uppercase;
-}
 
 .contact-discription p {
     margin-top: 22px;
