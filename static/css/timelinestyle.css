@@ -45,21 +45,15 @@ html {
 	font-weight:normal;
 }
 
-.h4
-
-{  font-size: 30px;
+.h4 {font-size: 30px;
   font-family: "Cooper Md BT";
   font-src: url ("http://db.onlinewebfonts.com/t/5a2d744f08ebe9cbea82e94d86efece9.eot");
   font-weight: bold;
   text-transform: uppercase;
   color: #ffffff;
-  justify-content: center;
-  align-items:center;
-  vertical-align: middle; 
-  text-align: center; 
-margin-top:10px;
-	margin-left:10px;
-	margin: 5px
+  margin-top:10px;
+  margin-left:10px;
+  margin: 5px;
   padding-top: 10px;
     padding-left: 5px;
     padding-right: 0px;
