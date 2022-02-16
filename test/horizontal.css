@@ -109,6 +109,7 @@ section .section-wrapper {
   padding-bottom: 50px;
   background-color: #F1C40F;
   color: #34495E;
+  height:20%;
 }
 
 #description {
