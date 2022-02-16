@@ -107,14 +107,13 @@ section .section-wrapper {
 #timeline {
   padding-top: 50px;
   padding-bottom: 50px;
-  background-color: #F1C40F;
-  color: #34495E;
-  height:20%;
+  background-color: #93247b;
+  color: #34495E;;
 }
 
 #description {
-  min-height: 30vh;
-  background-color: #34495E;
+  min-height: 80vh;
+  background-color: #ffffff;
 }
 #description h3 {
   font-size: 30px;
