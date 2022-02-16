@@ -462,6 +462,19 @@ text-align: center}
     padding-bottom: 5px;
 }
 
+.project-content h3 {
+font-family: museo-sans, sans-serif;
+font-weight: 300;
+font-style: normal;
+font-size: 10pt;
+    color: #000000;
+    margin-left: 15px;
+    margin-top: 15px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    display: block;
+}
+
 .project-content span {
 font-family: museo-sans, sans-serif;
 font-weight: 300;
