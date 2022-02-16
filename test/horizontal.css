@@ -116,8 +116,13 @@ section .section-wrapper {
   background-color: #34495E;
 }
 #description h3 {
-  color: #C0392B;
-  font-weight: 600;
+  font-size: 30px;
+font-family: museo-sans-rounded, sans-serif;
+font-weight: 800;
+font-style: normal;
+  text-transform: uppercase;
+text-decoration: underline wavy #93247b 2px; 
+  color: #000000;
 }
 #description .section-wrapper > div {
   display: none;
