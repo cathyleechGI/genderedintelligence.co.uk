@@ -39,7 +39,7 @@ section {
 section .section-wrapper {
   padding: 10px;
   box-sizing: border-box;
-  height: 20vh;
+  height: 50vh;
 }
 
 .line {
@@ -108,11 +108,11 @@ section .section-wrapper {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: #93247b;
-  color: #34495E;;
+  color: #34495E;
 }
 
 #description {
-  min-height: 80vh;
+  min-height: 50vh;
   background-color: #ffffff;
 }
 #description h3 {
