@@ -34,7 +34,7 @@ font-size: 12pt;
 section {
   width: 100%;
   box-sizing: border-box;
-  min-height: 33vh;
+  min-height: 20vh;
 }
 section .section-wrapper {
   padding: 10px;
