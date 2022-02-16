@@ -45,8 +45,11 @@ html {
   border: none;
   outline: 0;
   display: inline-block;
-  padding: 0px;
-  color: #ffffff;
+  padding-top: 4px;
+	padding-left:0px;
+	padding-right:0px;
+	padding-bottom:0px;
+  color: #93247b;
   background-color: transparent;
   text-align: center;
   cursor: pointer;
@@ -55,7 +58,7 @@ html {
 
 .button:hover {
   background-color: transparent;
-  color: black;
+  color: #ffffff;
 }
 
 
