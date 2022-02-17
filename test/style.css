@@ -23,7 +23,12 @@ font-display:auto;font-style:normal;font-weight:500;
 
 html {
   background-color: #34495E;
-  font-family: "museo-sans";
+  font-family: museo-sans, sans-serif;
+font-weight: 300;
+font-style: normal;
+font-size: 14pt;
+    color: #000000;
+    display: block;
   color: #FBFCFC;
 }
 
